@@ -1,0 +1,14 @@
+{
+  "markets": {
+    "downloaded": true,
+    "fileName": "markets.mp3",
+    "filePath": "data/pronunciation/google/markets.mp3",
+    "status": 200
+  },
+  "improvements": {
+    "downloaded": true,
+    "fileName": "improvements.mp3",
+    "filePath": "data/pronunciation/google/improvements.mp3",
+    "status": 200
+  }
+}

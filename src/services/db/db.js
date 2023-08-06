@@ -47,7 +47,7 @@ function connectDb() {
 
         const tag = await TagsModel.find();
         if (isEmpty(tag)) {
-          const newTag = new TagsModel({ name: "english" });
+          const newTag = new TagsModel({ name: "eng-uz" });
           await newTag.save();
         }
       } catch (error) {

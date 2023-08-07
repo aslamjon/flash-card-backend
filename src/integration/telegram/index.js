@@ -30,6 +30,8 @@ const contactController = async (msg) => {
   try {
     if (chatId !== userId) return bot.sendMessage(chatId, `${msg.from.first_name} Iltimos o'zingizni telefon raqamingizni yuboring`);
 
+    if (msg.contact.phone_number.startsWith("+")) msg.contact.phone_number = get(msg, "contact.phone_number", "").substr(1);
+
     const phoneNumberExists = await BotUserModel.findOne({ phoneNumber: msg.contact.phone_number });
     if (phoneNumberExists)
       return bot.sendMessage(chatId, `Qaytganingiz uchun rahmat. Botni imkonyatlaridan foydalanishingiz mumkin`, removeAllOptions);

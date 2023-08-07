@@ -10,5 +10,11 @@
     "fileName": "improvements.mp3",
     "filePath": "data/pronunciation/google/improvements.mp3",
     "status": 200
+  },
+  "wider": {
+    "downloaded": true,
+    "fileName": "wider.mp3",
+    "filePath": "data/pronunciation/google/wider.mp3",
+    "status": 200
   }
 }

@@ -19,6 +19,9 @@ const schema = new Schema({
     type: Types.ObjectId,
     ref: "Tags",
   },
+  type: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

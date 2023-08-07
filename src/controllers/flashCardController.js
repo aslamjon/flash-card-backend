@@ -30,15 +30,26 @@ const keyTitle = "FlashCard";
 
 const removeFeilds = ["-deleted", "-updated", "-updatedById", "-updatedAt", "-__v"];
 const populateOptions = [{ path: "tag", select: removeFeilds }];
+const types = {
+  adj: true,
+  adv: true,
+  noun: true,
+  verb: true,
+  pronoun: true,
+  preposition: true,
+  conjunction: true,
+  interjection: true,
+};
 
 const create = async (req, res) => {
   try {
-    let { front, back, frontDescription, backDescription, tagId } = req.body;
+    let { front, back, frontDescription, backDescription, tagId, type } = req.body;
 
     if (!front || !back) return res.status(400).send({ error: "front, back are required" });
 
     const tag = await getOneByQuery({ query: { _id: tagId }, Model: TagsModel });
     if (!tag) return res.status(404).send({ error: "tag is not found" });
+    if (type && !types[type]) return res.status(400).send({ error: "type error" });
 
     const newData = new DBModle({
       front,
@@ -46,6 +57,7 @@ const create = async (req, res) => {
       frontDescription,
       backDescription,
       tag: tagId,
+      type,
       createdById: get(req, "user.userId"),
     });
 
@@ -141,7 +153,7 @@ const deleteById = async (req, res) => {
 const updateById = async (req, res) => {
   try {
     const { id } = req.params;
-    let { front, back, frontDescription, backDescription } = req.body;
+    let { front, back, frontDescription, backDescription, type } = req.body;
 
     if (!id) return res.status(400).send({ error: " id are required" });
 
@@ -150,11 +162,14 @@ const updateById = async (req, res) => {
     let data = await getOneByQuery({ query });
 
     if (isEmpty(data)) return res.status(404).send({ message: "data not found" });
+    if (type && !types[type]) return res.status(400).send({ error: "type error" });
+    if (data.createdById !== get(req, "user.userId")) return res.status(403).send({ error: "not allowed" });
 
     data.front = front || data.front;
     data.back = back || data.back;
     data.frontDescription = frontDescription || data.frontDescription;
     data.backDescription = backDescription || data.backDescription;
+    data.type = type || data.type;
 
     data = updateFormat({ item: data, id: get(req, "user.userId") });
 

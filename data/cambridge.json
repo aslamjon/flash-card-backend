@@ -18566,5 +18566,11 @@
     "fileName": "spotlight.mp3",
     "filePath": "data/pronunciation/cambridge/spotlight.mp3",
     "status": 200
+  },
+  "loyal": {
+    "downloaded": true,
+    "fileName": "loyal.mp3",
+    "filePath": "data/pronunciation/cambridge/loyal.mp3",
+    "status": 200
   }
 }

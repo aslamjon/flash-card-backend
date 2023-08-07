@@ -16,5 +16,11 @@
     "fileName": "wider.mp3",
     "filePath": "data/pronunciation/google/wider.mp3",
     "status": 200
+  },
+  "chemicals": {
+    "downloaded": true,
+    "fileName": "chemicals.mp3",
+    "filePath": "data/pronunciation/google/chemicals.mp3",
+    "status": 200
   }
 }

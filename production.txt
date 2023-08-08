@@ -72,3 +72,8 @@ proxy_cache_bypass $http_upgrade;
 # AWS: restart nginx -> sudo service nginx restart
 
 # LOCAL: when change some code git push it and -> pm2 update then -> pm2 deploy production exce "npm install && pm2 startOrRestart ecosystem.config.js --env production"
+
+# ssh tunell
+# ssh -R 27018:localhost:27017 root@94.250.202.249
+
+# mongosh --username flash-card  --password 8Sqcks9qDsd95n6Mt8y3EJwfR06QTh226KuBik8WKrxa02Oi8q --port 27018

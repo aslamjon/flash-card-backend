@@ -163,7 +163,8 @@ const updateById = async (req, res) => {
 
     if (isEmpty(data)) return res.status(404).send({ message: "data not found" });
     if (type && !types[type]) return res.status(400).send({ error: "type error" });
-    if (data.createdById !== get(req, "user.userId")) return res.status(403).send({ error: "not allowed" });
+
+    if (data.createdById.toString() !== get(req, "user.userId")) return res.status(403).send({ error: "not allowed" });
 
     data.front = front || data.front;
     data.back = back || data.back;

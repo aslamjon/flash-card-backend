@@ -1,6 +1,6 @@
 const TelegramApi = require("node-telegram-bot-api");
 const { TELEGRAM_BOT_API } = require("../../config");
-const { startCommand, infoCommand } = require("./commands");
+const { startCommand, infoCommand, ratingCommand } = require("./commands");
 const { BotUserModel } = require("../../models/botUserModel");
 
 const fileName = require("path").basename(__filename);
@@ -20,7 +20,7 @@ const admins = {
 
 bot.setMyCommands([
   { command: "/start", description: "Boshlang'ich uchrashuv" },
-  { command: "/info", description: "Siz haqingizda ma'lumot" },
+  { command: "/rating", description: "rating" },
 ]);
 
 const contactController = async (msg) => {
@@ -87,7 +87,7 @@ const messageController = async (msg) => {
   const chatId = msg.chat.id;
 
   if (text === "/start") return startCommand(bot, msg);
-  else if (text === "/info") return infoCommand(bot, msg);
+  else if (text === "/rating") return ratingCommand(bot, msg);
 
   console.log(msg);
   if (!msg.contact && !msg.location && msg.document && !get(msg, "text", "").startsWith("/"))

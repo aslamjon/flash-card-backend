@@ -33,7 +33,7 @@ const getMongoDBPassword = () => {
 };
 
 const config = {
-  APP_NAME: "PREIVEW",
+  APP_NAME: "flashcard",
   API_ROOT: getEnvironments(),
   MONGODB_URL: getMongoDbUrl(),
   MONGO_USER: getMongoDBUser(),

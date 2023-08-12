@@ -6,6 +6,7 @@ const { isString, isEmpty, get, isArray } = require("lodash");
 const logger = require("./logger");
 const config = require("../config");
 const moment = require("moment");
+const axios = require("axios");
 const { UpdateModel } = require("../models/updateModel");
 // const { FileModel } = require("../models/fileModel");
 const { errorFormat } = require("./constants");
@@ -118,7 +119,6 @@ async function newFileSaver(req, res, file, accept_type = [".png", ".jpeg", ".jp
             // newFile.url = `upload/file/${folder}/${originalName}`;
             // newFile.url = `upload/file/${newFile._id.toString()}`;
             // await newFile.save();
-
             // return newFile;
             // return {
             //   id: newFile._id,
@@ -332,6 +332,14 @@ function toFixed(number, n = 2) {
 }
 
 const errorHandling = (e, functionName, res, fileName) => {
+  axios
+    .post("http://localhost:8083/api/v1/send", {
+      message: `${e.message} -> ${fileName} -> ${functionName} -> \n\n ${e.stack}`,
+      url: `http://${res.req.hostname}:${config.PORT}${res.req.originalUrl}`,
+      project: config.APP_NAME,
+      user: res.req.user ?? res.req.userId,
+    })
+    .catch((e) => {});
   require("./logger").error(`${e.message} -> ${fileName} -> ${functionName} -> \n\n ${e.stack}`);
   errors.SERVER_ERROR(res, { message: e.message });
 };

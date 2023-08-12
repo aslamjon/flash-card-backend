@@ -190,6 +190,7 @@ let google = {};
 const getPronunciation = async (req, res) => {
   try {
     const { word } = req.params;
+
     // if cache is empty, read cambridge and set it to cache
     if (isEmpty(cambridge)) {
       const res = fs.readFileSync("data/cambridge.json", { encoding: "ascii" });

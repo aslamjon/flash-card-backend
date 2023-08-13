@@ -565,7 +565,7 @@ const increaseRating = async (req, res) => {
     const users = await UserModel.find().populate(populateOptions);
     users.forEach((u) => {
       if (u.phoneNumber !== user.phoneNumber) {
-        bot.sendMessage(get(u, "botUserId.chatId"), `${get(user, "firstName")} ni yangi level ga ko'tarildi. Harakat qilish vaqti kelmadimi?`);
+        bot.sendMessage(get(u, "botUserId.chatId"), `${get(user, "firstName")} yangi level ga ko'tarildi. Harakat qilish vaqti kelmadimi?`);
       }
     });
   } catch (e) {

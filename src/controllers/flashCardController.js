@@ -250,11 +250,6 @@ const getPronunciation = async (req, res) => {
     errorHandling(e, getPronunciation.name, res, fileName);
   }
 };
-// Object.keys(words).forEach((key) => {
-//   words[key].filePath = `data/pronunciation/cambridge/${words[key].fileName}`;
-// });
-// console.log(words);
-// fs.writeFileSync("data/cambridge.json", JSON.stringify(words, null, 2));
 
 module.exports = {
   create,

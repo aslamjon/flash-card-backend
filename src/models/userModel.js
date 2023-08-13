@@ -25,6 +25,10 @@ const schema = new Schema({
     type: Number,
     default: 0,
   },
+  botUserId: {
+    type: Types.ObjectId,
+    ref: "BotUser",
+  },
   role: {
     type: String,
     required: true,

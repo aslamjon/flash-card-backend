@@ -1,10 +1,19 @@
 const { get } = require("lodash");
 const { BotUserModel } = require("../../models/botUserModel");
 const { UserModel } = require("../../models/userModel");
-const { contactOptions } = require("./keyboards");
+const { contactOptions, removeAllOptions } = require("./keyboards");
 
 const startCommand = async (bot, msg) => {
   const chatId = msg.chat.id;
+
+  const botUser = await BotUserModel.findOne({ chatId });
+  if (botUser)
+    return bot.sendMessage(
+      chatId,
+      `Assalomu aleykum ${msg.from.first_name} botiga xush kelibsiz.
+  `,
+      removeAllOptions
+    );
 
   return bot.sendMessage(
     chatId,

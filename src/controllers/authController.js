@@ -214,12 +214,16 @@ const createUser = async (req, res) => {
     const smsChecker = await smsCodeChecker(phoneNumber, smsCodeId, smsCode, res);
     if (smsChecker) return smsChecker;
 
+    const botUser = await BotUserModel.finOne({ phoneNumber });
+    if (!botUser) return res.status(400).send({ error: "bot user is not found" });
+
     const hashedPassword = await bcrypt.hash(password, secret);
     const newUser = new UserModel({
       firstName,
       lastName,
       phoneNumber,
       password: hashedPassword,
+      botUserId: botUser._id.toString(),
     });
     await newUser.save();
     const id = newUser._id.valueOf();
@@ -535,6 +539,9 @@ const getWithoutAdmins = async (req, res) => {
   }
 };
 
+const removeFeilds = ["-deleted", "-updated", "-updatedById", "-updatedAt", "-__v"];
+const populateOptions = [{ path: "botUserId", select: removeFeilds }];
+
 const increaseRating = async (req, res) => {
   try {
     const user = await UserModel.findById(get(req, "user.userId"));
@@ -552,6 +559,15 @@ const increaseRating = async (req, res) => {
 
     await user.save();
     res.send({ message: "ok" });
+
+    // const day = 1000 * 60 * 60 * 24;
+    // const month = day * 30;
+    const users = await UserModel.find().populate(populateOptions);
+    users.forEach((u) => {
+      if (u.phoneNumber !== user.phoneNumber) {
+        bot.sendMessage(get(u, "botUserId.chatId"), `${get(user, "firstName")} ni yangi level ga ko'tarildi. Harakat qilish vaqti kelmadimi?`);
+      }
+    });
   } catch (e) {
     errorHandling(e, increaseRating.name, res, fileName);
   }

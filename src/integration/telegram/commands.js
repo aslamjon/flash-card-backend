@@ -49,7 +49,7 @@ const ratingCommand = async (bot, msg) => {
   users.forEach((user, index) => {
     message += `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${user.numberOfAttempts}\n`;
   });
-  bot.sendMessage(chatId, message);
+  bot.sendMessage(chatId, message, homeOptions);
 };
 
 const statisticsCommand = async (bot, msg) => {
@@ -100,7 +100,7 @@ const statisticsCommand = async (bot, msg) => {
     message += `🔝 Oxirgi 1 oyda — ${lastMonthUsers.length} ta obunachi qo'shildi\n\n`;
     message += `📊 ${config.TELEGRAM_BOT_USERNAME} statistikasi`;
 
-    bot.sendMessage(chatId, message);
+    bot.sendMessage(chatId, message, homeOptions);
   } catch (e) {
     console.log(e);
   }

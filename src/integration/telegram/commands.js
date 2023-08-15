@@ -16,14 +16,14 @@ const startCommand = async (bot, msg) => {
   if (botUser)
     return bot.sendMessage(
       chatId,
-      `Assalomu aleykum ${msg.from.first_name} botiga xush kelibsiz.
+      `Assalomu aleykum ${msg.from.first_name} botga xush kelibsiz.
   `,
       homeOptions
     );
 
   return bot.sendMessage(
     chatId,
-    `Assalomu aleykum ${msg.from.first_name} botiga xush kelibsiz.
+    `Assalomu aleykum ${msg.from.first_name} botga xush kelibsiz.
   `,
     contactOptions
   );

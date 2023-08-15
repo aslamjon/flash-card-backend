@@ -214,7 +214,7 @@ const createUser = async (req, res) => {
     const smsChecker = await smsCodeChecker(phoneNumber, smsCodeId, smsCode, res);
     if (smsChecker) return smsChecker;
 
-    const botUser = await BotUserModel.finOne({ phoneNumber });
+    const botUser = await BotUserModel.findOne({ phoneNumber });
     if (!botUser) return res.status(400).send({ error: "bot user is not found" });
 
     const hashedPassword = await bcrypt.hash(password, secret);

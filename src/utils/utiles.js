@@ -344,8 +344,17 @@ const errorHandling = (e, functionName, res, fileName) => {
   errors.SERVER_ERROR(res, { message: e.message });
 };
 
-const errorHandlerBot = (e, functionName, fileName) => require("./logger").error(`${e.message} -> ${fileName} -> ${functionName} -> \n\n ${e.stack}`);
-
+const errorHandlerBot = (e, functionName, fileName, msg) => {
+  axios
+    .post("http://localhost:8083/api/v1/send", {
+      message: `${e.message} -> ${fileName} -> ${functionName} -> \n\n ${JSON.stringify(msg)} -> \n\n ${e.stack}`,
+      url: `none`,
+      project: config.APP_NAME,
+      user: "none",
+    })
+    .catch((e) => {});
+  require("./logger").error(`${e.message} -> ${fileName} -> ${functionName} -> \n\n ${JSON.stringify(msg)} -> \n\n ${e.stack}`);
+};
 const hideFields = (items = {}) => ({
   deleted: 0,
   deletedAt: 0,

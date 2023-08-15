@@ -1,6 +1,6 @@
 const TelegramApi = require("node-telegram-bot-api");
 const { TELEGRAM_BOT_API } = require("../../config");
-const { startCommand, infoCommand, ratingCommand, statisticsCommand } = require("./commands");
+const { startCommand, infoCommand, ratingCommand, statisticsCommand, showAdsToEveryUsers } = require("./commands");
 const { BotUserModel } = require("../../models/botUserModel");
 
 const fileName = require("path").basename(__filename);
@@ -81,7 +81,7 @@ const messageController = async (msg) => {
   if (text === "/start") return startCommand(bot, msg);
   else if (text === "/rating" || text === "📈 Rating") return ratingCommand(bot, msg);
   else if (text === "/statistics" || text === "📊 Statistics") return statisticsCommand(bot, msg);
-  // else if (text === "📊 Statistics") return statisticsCommand(bot, msg);
+  else if (get(msg, "text", "").startsWith("/ads") || get(msg, "caption", "").startsWith("/ads")) return showAdsToEveryUsers(bot, msg);
 
   console.log(msg);
   if (!msg.contact && !msg.location && msg.document && !get(msg, "text", "").startsWith("/"))
@@ -99,6 +99,11 @@ const init = () => {
 
   bot.on("document", (msg) => {
     // file
+    console.log("document");
+  });
+  bot.on("photo", (msg) => {
+    // const chatId = msg.chat.id;
+    // if (get(msg, "caption", "").startsWith("/ads")) return showAdsToEveryUsers(bot, msg, "")
   });
 
   bot.on("location", locationController);

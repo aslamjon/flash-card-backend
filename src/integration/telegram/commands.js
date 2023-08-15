@@ -5,6 +5,9 @@ const { UserModel } = require("../../models/userModel");
 const { FlashCardModel } = require("../../models/flashCardModel");
 const { contactOptions, homeOptions } = require("./keyboards");
 const config = require("../../config");
+const { errorHandlerBot } = require("../../utils/utiles");
+
+const fileName = require("path").basename(__filename);
 
 const startCommand = async (bot, msg) => {
   const chatId = msg.chat.id;
@@ -31,25 +34,54 @@ const infoCommand = async (bot, msg) => {
 };
 
 const ratingCommand = async (bot, msg) => {
-  const chatId = msg.chat.id;
-  const botUser = await BotUserModel.findOne({ chatId });
-  if (!botUser) return bot.sendMessage(chatId, "data not found");
+  try {
+    const chatId = msg.chat.id;
+    const botUser = await BotUserModel.findOne({ chatId });
+    if (!botUser) return bot.sendMessage(chatId, "data not found");
 
-  const user = await UserModel.findOne({ phoneNumber: get(botUser, "phoneNumber") });
+    const user = await UserModel.findOne({ phoneNumber: get(botUser, "phoneNumber") });
 
-  const sortField = "numberOfAttempts";
-  const sortOrder = -1; // -1 for descending, 1 for ascending
+    const sortField = "numberOfAttempts";
+    const sortOrder = -1; // -1 for descending, 1 for ascending
 
-  const users = await UserModel.find()
-    .sort({ [sortField]: sortOrder })
-    .limit(10);
+    const users = await UserModel.find()
+      .sort({ [sortField]: sortOrder })
+      .limit(10);
 
-  let message = `🎯 Your rating: ${user.numberOfAttempts}\n\n`;
+    const flashcardGroupingByCreatedById = await FlashCardModel.aggregate([
+      {
+        $group: {
+          _id: "$createdById",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
 
-  users.forEach((user, index) => {
-    message += `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${user.numberOfAttempts}\n`;
-  });
-  bot.sendMessage(chatId, message, homeOptions);
+    const resultObject = {};
+
+    flashcardGroupingByCreatedById.forEach((item) => {
+      resultObject[item._id] = item.count;
+    });
+
+    let message = `🎯 Your rating: ${user?.numberOfAttempts}\n\n`;
+
+    let longerName = 0;
+    users.forEach((user, index) => {
+      const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${user.numberOfAttempts};`;
+      if (nameAndRating.length > longerName) longerName = nameAndRating.length;
+    });
+
+    users.forEach((user, index) => {
+      const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${
+        user.numberOfAttempts
+      };`.padEnd(longerName + 2);
+      message += `${nameAndRating} ${get(resultObject, user._id) ? get(resultObject, user._id) + " - ta so'z qo'shgan" : ""}\n`;
+    });
+
+    bot.sendMessage(chatId, message, homeOptions);
+  } catch (e) {
+    errorHandlerBot(e, ratingCommand.name, fileName, msg);
+  }
 };
 
 const statisticsCommand = async (bot, msg) => {
@@ -102,7 +134,48 @@ const statisticsCommand = async (bot, msg) => {
 
     bot.sendMessage(chatId, message, homeOptions);
   } catch (e) {
-    console.log(e);
+    errorHandlerBot(e, statisticsCommand.name, fileName, msg);
+  }
+};
+
+const showAdsToEveryUsers = async (bot, msg) => {
+  try {
+    const chatId = msg.chat.id;
+    const botUser = await BotUserModel.findOne({ chatId });
+    if (!botUser) return bot.sendMessage(chatId, "data not found");
+    if (!botUser.isAdmin) return bot.sendMessage(chatId, "you are not allowed");
+
+    // console.log(msg.text);
+    // console.log(msg);
+    if (msg.photo) {
+      const photo = msg.photo.pop();
+      let caption = msg.caption || "";
+      if (caption.startsWith("/ads")) caption = caption.substr(4);
+
+      const botUsers = await BotUserModel.find();
+
+      botUsers.forEach((user) => {
+        if (user._id.toString() !== botUser._id.toString()) bot.sendPhoto(user.chatId, photo.file_id, { caption });
+      });
+    } else if (msg.document) {
+      let caption = msg.caption || "";
+      if (caption.startsWith("/ads")) caption = caption.substr(4);
+      const botUsers = await BotUserModel.find();
+
+      botUsers.forEach((user) => {
+        if (user._id.toString() !== botUser._id.toString()) bot.sendDocument(user.chatId, msg.document.file_id, { caption });
+      });
+    } else if (msg.text) {
+      let text = msg.text || "";
+      if (text.startsWith("/ads")) text = text.substr(4);
+      const botUsers = await BotUserModel.find();
+
+      botUsers.forEach((user) => {
+        if (user._id.toString() !== botUser._id.toString()) bot.sendMessage(user.chatId, text);
+      });
+    }
+  } catch (e) {
+    errorHandlerBot(e, showAdsToEveryUsers.name, fileName, msg);
   }
 };
 
@@ -111,4 +184,5 @@ module.exports = {
   infoCommand,
   ratingCommand,
   statisticsCommand,
+  showAdsToEveryUsers,
 };

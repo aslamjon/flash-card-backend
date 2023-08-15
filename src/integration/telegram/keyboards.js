@@ -38,7 +38,8 @@ const startOpitons = {
 
 const homeOptions = {
   reply_markup: JSON.stringify({
-    keyboard: [["📊 Statistics", "📈 Rating"]],
+    keyboard: [[{ text: "📊 Statistics" }, { text: "📈 Rating" }]],
+    resize_keyboard: true,
   }),
 };
 

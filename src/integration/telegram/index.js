@@ -1,13 +1,13 @@
 const TelegramApi = require("node-telegram-bot-api");
 const { TELEGRAM_BOT_API } = require("../../config");
-const { startCommand, infoCommand, ratingCommand } = require("./commands");
+const { startCommand, infoCommand, ratingCommand, statisticsCommand } = require("./commands");
 const { BotUserModel } = require("../../models/botUserModel");
 
 const fileName = require("path").basename(__filename);
 
 const bot = new TelegramApi(TELEGRAM_BOT_API, { polling: true });
 
-const { contactOptions, locationOption, gameOptions, againOptions, homeOptions, removeAllOptions, startOpitons } = require("./keyboards");
+const { contactOptions, locationOption, homeOptions, removeAllOptions, startOpitons } = require("./keyboards");
 const { errorHandlerBot } = require("../../utils/utiles");
 const { get } = require("lodash");
 
@@ -21,6 +21,7 @@ const admins = {
 bot.setMyCommands([
   { command: "/start", description: "Boshlang'ich uchrashuv" },
   { command: "/rating", description: "rating" },
+  { command: "/statistics", description: "statistics" },
 ]);
 
 const contactController = async (msg) => {
@@ -44,7 +45,7 @@ const contactController = async (msg) => {
       });
 
       await newUser.save();
-      return bot.sendMessage(chatId, `Rahmat ${msg.from.first_name}`, removeAllOptions);
+      return bot.sendMessage(chatId, `Rahmat ${msg.from.first_name}`, homeOptions);
     }
   } catch (e) {
     errorHandlerBot(e, contactController.name, fileName);
@@ -70,16 +71,7 @@ const callbackQueryController = async (msg) => {
   const chatId = msg.message.chat.id;
 
   if (data === "/again") return startGame(chatId);
-  console.log("callback_query", msg);
-
-  if (!chats[chatId]) return bot.sendMessage(chatId, "🖐 Faqat bir marta bosish mumkin");
-  if (data === chats[chatId]) {
-    delete chats[chatId];
-    return bot.sendMessage(chatId, `🏆Tabriklayman, siz to'g'ri soni tanladingiz, ${chats[chatId]}`);
-  } else {
-    delete chats[chatId];
-    return bot.sendMessage(chatId, `🤦Afsuski noto'g'ri soni tanladingiz, ${chats[chatId]}`, againOptions);
-  }
+  console.log("callback_query", data);
 };
 
 const messageController = async (msg) => {
@@ -87,7 +79,9 @@ const messageController = async (msg) => {
   const chatId = msg.chat.id;
 
   if (text === "/start") return startCommand(bot, msg);
-  else if (text === "/rating") return ratingCommand(bot, msg);
+  else if (text === "/rating" || text === "📈 Rating") return ratingCommand(bot, msg);
+  else if (text === "/statistics" || text === "📊 Statistics") return statisticsCommand(bot, msg);
+  // else if (text === "📊 Statistics") return statisticsCommand(bot, msg);
 
   console.log(msg);
   if (!msg.contact && !msg.location && msg.document && !get(msg, "text", "").startsWith("/"))

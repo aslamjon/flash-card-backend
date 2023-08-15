@@ -1,7 +1,10 @@
 const { get } = require("lodash");
+const moment = require("moment");
 const { BotUserModel } = require("../../models/botUserModel");
 const { UserModel } = require("../../models/userModel");
-const { contactOptions, removeAllOptions } = require("./keyboards");
+const { FlashCardModel } = require("../../models/flashCardModel");
+const { contactOptions, homeOptions } = require("./keyboards");
+const config = require("../../config");
 
 const startCommand = async (bot, msg) => {
   const chatId = msg.chat.id;
@@ -12,7 +15,7 @@ const startCommand = async (bot, msg) => {
       chatId,
       `Assalomu aleykum ${msg.from.first_name} botiga xush kelibsiz.
   `,
-      removeAllOptions
+      homeOptions
     );
 
   return bot.sendMessage(
@@ -49,8 +52,63 @@ const ratingCommand = async (bot, msg) => {
   bot.sendMessage(chatId, message);
 };
 
+const statisticsCommand = async (bot, msg) => {
+  try {
+    const chatId = msg.chat.id;
+    const botUser = await BotUserModel.findOne({ chatId });
+    if (!botUser) return bot.sendMessage(chatId, "data not found");
+
+    const users = await UserModel.find();
+
+    const flashCards = await FlashCardModel.aggregate([
+      {
+        $group: {
+          _id: "$tag",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $lookup: {
+          from: "tags",
+          localField: "_id",
+          foreignField: "_id",
+          as: "tag",
+        },
+      },
+      {
+        $addFields: {
+          tag: { $arrayElemAt: ["$tag", 0] }, // Convert authorData array to a single object
+        },
+      },
+    ]);
+
+    let message = `📔 So'zlarning tag bo'yicha statistikasi:\n\n`;
+
+    flashCards.forEach((flashcard) => {
+      message += `✍ ${get(flashcard, "tag.name")}: ${get(flashcard, "count")} ta so'z qo'shilgan\n\n`;
+    });
+
+    const currentDate = moment();
+    const lastMonthMaxDate = currentDate.clone().subtract(1, "month").endOf("month").toDate();
+
+    const lastMonthUsers = await UserModel.find({ $gt: { createdAt: lastMonthMaxDate } });
+
+    // 🔜 Oxirgi 24 soatda: 7  obunachi qo'shildi
+    // 💰Reklama: 👉 t.me/techno_ads/104
+    // 📆 Bot ishga tushganiga: 843  kun bo'ldi
+    message += `🧑🏻‍💻 Botdagi obunachilar: ${users.length} ta\n\n`;
+    message += `🔝 Oxirgi 1 oyda — ${lastMonthUsers.length} ta obunachi qo'shildi\n\n`;
+    message += `📊 ${config.TELEGRAM_BOT_USERNAME} statistikasi`;
+
+    bot.sendMessage(chatId, message);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 module.exports = {
   startCommand,
   infoCommand,
   ratingCommand,
+  statisticsCommand,
 };

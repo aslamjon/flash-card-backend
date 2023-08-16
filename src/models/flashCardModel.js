@@ -22,6 +22,9 @@ const schema = new Schema({
   type: {
     type: String,
   },
+  transcription: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

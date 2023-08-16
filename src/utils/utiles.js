@@ -11,6 +11,7 @@ const { UpdateModel } = require("../models/updateModel");
 // const { FileModel } = require("../models/fileModel");
 const { errorFormat } = require("./constants");
 const { download } = require("../services/downloadPronunciation/downloadFile");
+const { FlashCardModel } = require("../models/flashCardModel");
 
 const writeData = (filename, content) => {
   fs.writeFile(filename, JSON.stringify(content, null, 4), "utf8", (err) => {
@@ -440,6 +441,96 @@ const isNum = (num) => {
 const isFile = (path) => fs.existsSync(path) && fs.lstatSync(path).isFile();
 
 // ********************************************************
+
+// const types = {
+//   adj: "adj",
+//   adv: "adv",
+//   n: "noun",
+//   v: "verb",
+//   pron: "pronoun",
+//   prep: "preposition",
+//   conj: "conjunction",
+//   int: "interjection",
+// };
+
+// (async () => {
+//   const tagId = "64db1518a9a8f4a2ace3f1f1";
+//   const createdById = "64cfacb7a5d863fa72e3ab3a";
+
+//   let temp = {};
+//   const flashcardsByTagId = await FlashCardModel.find({ tag: tagId });
+
+//   let obj = {};
+//   flashcardsByTagId.forEach((flash) => {
+//     obj[flash.front + flash.type] = flash;
+//   });
+//   let counter = 1;
+
+//   for (let i = 1; i < 7; i++) {
+//     const name = `essential-english-words-${i}`;
+//     let res = fs.readFileSync(`data/${name}.json`);
+//     res = JSON.parse(res);
+
+//     let list = [];
+
+//     res.forEach((unit, ind) => {
+//       if (ind < 30) {
+//         unit.wordlist.forEach((word, i) => {
+//           word.url = `https://www.essentialenglish.review/apps-data/4000-${name}/data/unit-${ind + 1}/wordlist/${word.image}`;
+//           const filePath = `${config.IMAGES_PATH}/${word.en.toLowerCase()}.jpg`;
+//           word.filePath = filePath;
+//           const [pron, type] = word.pron.replace(".", "").split(" ");
+
+//           temp[get(word, "en") + types[type]] = word;
+//           list.push(word);
+//         });
+//       }
+//     });
+
+//     list.forEach(async (word, ind) => {
+//       const [pron, type] = word.pron.replace(".", "").split(" ");
+
+//       if (obj[get(word, "en") + types[type]]) {
+//         // console.log(counter);
+//         // counter++;
+//         // console.log(obj[get(word, "en")]);
+//         // console.log(word);
+//         // const flash = await FlashCardModel.findOne({ tag: tagId, front: get(word, "en") });
+//         // if (flash) {
+//         //   console.log(counter);
+//         //   counter++;
+//         // }
+//         // if (flash) {
+//         //   flash.frontDescription = get(word, "exam");
+//         //   flash.backDescription = get(word, "desc");
+//         //   flash.transcription = pron;
+//         //   flash.type = types[type];
+//         //   await flash.save();
+//         // }
+//       } else {
+//         console.log(word);
+//         // const newWord = new FlashCardModel({
+//         //   front: get(word, "en"),
+//         //   back: "t",
+//         //   frontDescription: get(word, "exam"),
+//         //   backDescription: get(word, "desc"),
+//         //   type: types[type],
+//         //   transcription: pron,
+//         //   tag: tagId,
+//         //   createdById,
+//         // });
+//         // await newWord.save();
+//         // console.log(counter);
+//         // counter++;
+//       }
+//     });
+//   }
+
+//   console.log("finish");
+
+//   // console.log(Object.keys(temp).length);
+// })();
+
 module.exports = {
   writeData,
   rename,

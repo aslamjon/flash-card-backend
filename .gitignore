@@ -12,5 +12,4 @@ pm2
 .vercel
 data/cache
 data/deletedFiles
-data/images
 package-lock.json

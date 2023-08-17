@@ -115,8 +115,8 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = config.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}`);
-  connectDb();
+  await connectDb();
   startTelegramBot();
 });

@@ -30,6 +30,7 @@ const config = {
   TELEGRAM_BOT_API: getVarable("TELEGRAM_BOT_API"),
   TELEGRAM_BOT_USERNAME: getVarable("TELEGRAM_BOT_USERNAME"),
   LIMIT_FOR_UPLOADING_FILE_SIZE_IN_BAYTE: process.env.LIMIT_FOR_UPLOADING_FILE_SIZE_IN_BAYTE || "1048576",
+  TOKEN_TYPE: process.env.TOKEN_TYPE,
 };
 
 module.exports = config;

@@ -84,24 +84,23 @@ const getData = async (req, res) => {
     if (type === "self") query.createdById = get(req, "user.userId");
 
     let result = {};
-
     if (skip && limit) {
       skip = Number(skip);
       limit = Number(limit);
-      if (skip <= limit) {
-        [result.items, result.count] = await Promise.all([
-          getDataByQuery({ query }).skip(skip).limit(limit).populate(populateOptions),
-          DBModle.countDocuments({ ...query, deleted: { $eq: false } }),
-        ]);
-        const flashCardIds = result.items.map((i) => i._id);
-        const rating = await getDataByQuery({ query: { flashCardId: { $in: flashCardIds }, userId: get(req, "user.userId") }, Model: RatingModel });
+      if (limit > 100) return res.status(400).send({ error: "limit is invalid" });
 
-        return res.send({
-          data: result.items,
-          rating,
-          count: result.count,
-        });
-      }
+      [result.items, result.count] = await Promise.all([
+        getDataByQuery({ query }).skip(skip).limit(limit).populate(populateOptions),
+        DBModle.countDocuments({ ...query, deleted: { $eq: false } }),
+      ]);
+      const flashCardIds = result.items.map((i) => i._id);
+      const rating = await getDataByQuery({ query: { flashCardId: { $in: flashCardIds }, userId: get(req, "user.userId") }, Model: RatingModel });
+
+      return res.send({
+        data: result.items,
+        rating,
+        count: result.count,
+      });
     }
 
     const items = await getDataByQuery({ query }).populate(populateOptions);

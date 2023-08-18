@@ -87,7 +87,7 @@ const getData = async (req, res) => {
     if (skip && limit) {
       skip = Number(skip);
       limit = Number(limit);
-      if (limit > 100) return res.status(400).send({ error: "limit is invalid" });
+      if (limit > 200) return res.status(400).send({ error: "limit is invalid" });
 
       [result.items, result.count] = await Promise.all([
         getDataByQuery({ query }).skip(skip).limit(limit).populate(populateOptions),

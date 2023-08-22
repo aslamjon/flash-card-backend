@@ -1,16 +1,40 @@
-const name = "essential-english-words-3";
+const fs = require("fs");
+const { IMAGES_PATH } = require("../../config");
+const { download } = require("../downloadPronunciation/downloadFile");
+const { createDefaultFolder } = require("../../utils/utiles");
+
+const name = "essential-english-words-6";
 
 let res = fs.readFileSync(`data/${name}.json`);
 res = JSON.parse(res);
+
+const types = {
+  adj: "adj",
+  adv: "adv",
+  n: "noun",
+  v: "verb",
+  pron: "pronoun",
+  prep: "preposition",
+  conj: "conjunction",
+  int: "interjection",
+};
 
 let list = [];
 console.time("forEach");
 res.forEach((unit, ind) => {
   if (ind < 30) {
     unit.wordlist.forEach((word, i) => {
+      const [pron, type] = word.pron.replace(".", "").split(" ");
       word.url = `https://www.essentialenglish.review/apps-data/4000-${name}/data/unit-${ind + 1}/wordlist/${word.image}`;
-      const filePath = `${config.IMAGES_PATH}/${word.en.toLowerCase()}.jpg`;
-      word.filePath = filePath;
+      const filePath = `${IMAGES_PATH}/${types[type]}`;
+      if (!types[type]) {
+        console.log(ind + 1, i + 1, types[type], type);
+        console.log(word);
+        throw new Error("error");
+      }
+      createDefaultFolder(filePath);
+
+      word.filePath = `${filePath}/${word.en.toLowerCase()}.jpg`;
       if (ind === 22 && i === 0) {
         console.log(filePath);
       }
@@ -72,7 +96,7 @@ const init = ({
   }, 1);
 };
 
-console.time(`start`);
+// console.time(`start`);
 // init({
 //   array: list,
 //   index: 0,

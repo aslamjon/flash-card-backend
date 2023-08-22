@@ -265,7 +265,7 @@
       },
       {
         "en": "ensure",
-        "pron": "[ɪnˈʃʊər]",
+        "pron": "[ɪnˈʃʊər] v",
         "desc": "To ensure is to make certain that something happens.",
         "exam": "Eating good food <strong>ensures </strong>that we stay healthy.",
         "vi": "",
@@ -283,7 +283,7 @@
       },
       {
         "en": "jewelry",
-        "pron": "[ˈdʒu:əlri]",
+        "pron": "[ˈdʒu:əlri] n",
         "desc": "Jewelry is something that people wear like earrings or necklaces.",
         "exam": "The woman looked beautiful with her nice dress and <strong>jewelry</strong>.",
         "vi": "",
@@ -310,7 +310,7 @@
       },
       {
         "en": "monster",
-        "pron": "[ˈmɒnstər]",
+        "pron": "[ˈmɒnstər] n",
         "desc": "A monster is any imaginary frightening creature that looks strange.",
         "exam": "The <strong>monster </strong>scared everyone in the village.",
         "vi": "",
@@ -2145,7 +2145,7 @@
       },
       {
         "en": "ought",
-        "pron": "[ɔːt] aux. v.",
+        "pron": "[ɔːt] v.",
         "desc": "If someone ought to do something, then it is the right thing to do.",
         "exam": "I <strong>ought </strong>to take my library books back.",
         "vi": "",
@@ -2652,7 +2652,7 @@
       },
       {
         "en": "passive",
-        "pron": "[ˈpæsɪv] a.",
+        "pron": "[ˈpæsɪv] adj.",
         "desc": "If a person is passive, they do not take action to solve problems.",
         "exam": "Marcie is so <strong>passive </strong>that she never solves her own problems.",
         "vi": "",
@@ -3334,7 +3334,7 @@
       },
       {
         "en": "smooth",
-        "pron": "[smuːð] a.",
+        "pron": "[smuːð] adj.",
         "desc": "If something is smooth, it has no bumps.",
         "exam": "The baby&rsquo;s skin felt very <strong>smooth</strong>.",
         "vi": "",
@@ -4649,7 +4649,7 @@
       },
       {
         "en": "pour",
-        "pron": "[pɔːr]",
+        "pron": "[pɔːr] v",
         "desc": "To pour a liquid means to make it come out of a container.",
         "exam": "I <strong>poured </strong>some milk into my sister&rsquo;s cup.",
         "vi": "",

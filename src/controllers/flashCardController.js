@@ -20,6 +20,7 @@ const { downloadGoogleAudio } = require("../services/downloadPronunciation/getGo
 
 const words = require("../../data/cambridge.json");
 const logger = require("../utils/logger");
+const { IMAGES_PATH } = require("../config");
 
 const fileName = path.basename(__filename);
 
@@ -250,6 +251,17 @@ const getPronunciation = async (req, res) => {
   }
 };
 
+const getImage = async (req, res) => {
+  try {
+    const { word, type } = req.params;
+    const filePath = path.join(__dirname, `../../${IMAGES_PATH}/${type}/${word}.jpg`);
+
+    return res.sendFile(filePath);
+  } catch (e) {
+    errorHandling(e, getImage.name, res, fileName);
+  }
+};
+
 module.exports = {
   create,
   getData,
@@ -257,4 +269,5 @@ module.exports = {
   deleteById,
   updateById,
   getPronunciation,
+  getImage,
 };

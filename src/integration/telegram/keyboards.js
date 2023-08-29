@@ -39,7 +39,7 @@ const startOpitons = {
 const homeOptions = (chatId) => ({
   reply_markup: JSON.stringify({
     keyboard: [
-      [{ text: "📚 Learn now", web_app: { url: `https://card.aslamjon.uz/sign/${chatId}` } }],
+      [{ text: "📚 Learn now", web_app: { url: `https://card.aslamjon.uz?chatId=${chatId}` } }],
       [{ text: "📊 Statistics" }, { text: "📈 Rating" }],
     ],
     resize_keyboard: true,

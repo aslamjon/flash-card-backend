@@ -573,6 +573,27 @@ const increaseRating = async (req, res) => {
   }
 };
 
+const loginWithChatId = async (req, res) => {
+  try {
+    const { chatId } = req.params;
+
+    const exist = await getOneByQuery({ query: { chatId }, Model: BotUserModel });
+    if (!chatId) return res.status(404).send({ error: "Error" });
+
+    const user = await getOneByQuery({ query: { phoneNumber: get(exist, "phoneNumber") }, Model: UserModel });
+    if (!user) return res.status(404).send({ error: "User not registered" });
+
+    const origin = req.get("Origin");
+    if (origin === "http://localhost:3001" || origin === "https://card.aslamjon.uz" || origin === "https://dev.aslamjon.uz") {
+      const { token, refreshToken } = tokenGenerator(user._id.toString(), get(user, "role"));
+      return res.status(200).send({ accessToken: token, refreshToken, tokenType: config.TOKEN_TYPE });
+    }
+    res.send({});
+  } catch (e) {
+    errorHandling(e, loginWithChatId.name, res, fileName);
+  }
+};
+
 module.exports = {
   login,
   me,
@@ -596,4 +617,5 @@ module.exports = {
   createAdmin,
   removeAdmin,
   increaseRating,
+  loginWithChatId,
 };

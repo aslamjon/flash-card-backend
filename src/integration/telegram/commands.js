@@ -18,7 +18,7 @@ const startCommand = async (bot, msg) => {
       chatId,
       `Assalomu aleykum ${msg.from.first_name} botga xush kelibsiz.
   `,
-      homeOptions
+      homeOptions(chatId)
     );
 
   return bot.sendMessage(
@@ -78,7 +78,7 @@ const ratingCommand = async (bot, msg) => {
       message += `${nameAndRating} ${get(resultObject, user._id) ? get(resultObject, user._id) + " - ta so'z qo'shgan" : ""}\n`;
     });
 
-    bot.sendMessage(chatId, message, homeOptions);
+    bot.sendMessage(chatId, message, homeOptions(chatId));
   } catch (e) {
     errorHandlerBot(e, ratingCommand.name, fileName, msg);
   }
@@ -132,7 +132,7 @@ const statisticsCommand = async (bot, msg) => {
     message += `🔝 Oxirgi 1 oyda — ${lastMonthUsers.length} ta obunachi qo'shildi\n\n`;
     message += `📊 ${config.TELEGRAM_BOT_USERNAME} statistikasi`;
 
-    bot.sendMessage(chatId, message, homeOptions);
+    bot.sendMessage(chatId, message, homeOptions(chatId));
   } catch (e) {
     errorHandlerBot(e, statisticsCommand.name, fileName, msg);
   }

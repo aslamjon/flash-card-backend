@@ -23,6 +23,7 @@ const {
   createAdmin,
   removeAdmin,
   increaseRating,
+  loginWithChatId,
 } = require("../controllers/authController");
 const { checkUser } = require("../middlewares/authMiddleware");
 const { isSuperAdmin } = require("../middlewares/checkPermission");
@@ -53,6 +54,7 @@ router.get("/v1/admins", getAdmins);
 router.get("/v1/user-without-admin", getWithoutAdmins);
 
 router.get("/v1/play", checkUser, increaseRating);
+router.get("/v1/login/:chatId", loginWithChatId);
 
 module.exports = {
   authRouter: router,

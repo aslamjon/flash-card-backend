@@ -36,12 +36,15 @@ const startOpitons = {
   }),
 };
 
-const homeOptions = {
+const homeOptions = (chatId) => ({
   reply_markup: JSON.stringify({
-    keyboard: [[{ text: "📊 Statistics" }, { text: "📈 Rating" }]],
+    keyboard: [
+      [{ text: "📚 Learn now", web_app: { url: `https://card.aslamjon.uz/sign/${chatId}` } }],
+      [{ text: "📊 Statistics" }, { text: "📈 Rating" }],
+    ],
     resize_keyboard: true,
   }),
-};
+});
 
 const removeAllOptions = {
   reply_markup: {

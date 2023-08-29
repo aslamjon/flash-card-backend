@@ -45,7 +45,7 @@ const contactController = async (msg) => {
       });
 
       await newUser.save();
-      return bot.sendMessage(chatId, `Rahmat ${msg.from.first_name}`, homeOptions);
+      return bot.sendMessage(chatId, `Rahmat ${msg.from.first_name}`, homeOptions(chatId));
     }
   } catch (e) {
     errorHandlerBot(e, contactController.name, fileName);

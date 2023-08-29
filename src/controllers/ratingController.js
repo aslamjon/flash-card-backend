@@ -135,16 +135,18 @@ const updateById = async (req, res) => {
 
     let data = await getOneByQuery({ query: { flashCardId } });
 
+    const ratingInterval = 3;
+
     if (isEmpty(data)) {
       const newRating = new DBModle({
         flashCardId,
         userId: get(req, "user.userId"),
         ...(answer === "correct"
-          ? { rating: 3, level: 1 }
+          ? { rating: (get(req, "user.numberOfAttempts", 0) + 1) * ratingInterval, level: get(req, "user.numberOfAttempts", 0) + 1 }
           : answer === "incorrect"
           ? {
-              rating: 0,
-              level: 0,
+              rating: get(req, "user.numberOfAttempts", 0) * ratingInterval,
+              level: get(req, "user.numberOfAttempts", 0),
             }
           : {}),
         createdById: get(req, "user.userId"),
@@ -155,10 +157,10 @@ const updateById = async (req, res) => {
 
     if (answer === "correct") {
       data.level++;
-      data.rating += data.level * 3;
+      data.rating += data.level * ratingInterval;
     } else if (answer === "incorrect") {
       data.level--;
-      data.rating += data.level * 3;
+      data.rating += data.level * ratingInterval;
     }
 
     data = updateFormat({ item: data, id: get(req, "user.userId") });

@@ -51,6 +51,8 @@ const create = async (req, res) => {
     const tag = await getOneByQuery({ query: { _id: tagId }, Model: TagsModel });
     if (!tag) return res.status(404).send({ error: "tag is not found" });
     if (type && !types[type]) return res.status(400).send({ error: "type error" });
+    const exist = await getOneByQuery({ query: { front, tag: tagId, type, createdById: get(req, "user.userId") } });
+    if (exist) return res.status(400).send({ error: "This word has already been added" });
 
     const newData = new DBModle({
       front,

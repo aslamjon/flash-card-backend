@@ -584,7 +584,12 @@ const loginWithChatId = async (req, res) => {
     if (!user) return res.status(404).send({ error: "User not registered" });
 
     const origin = req.get("Origin");
-    if (origin === "http://localhost:3001" || origin === "https://card.aslamjon.uz" || origin === "https://dev.aslamjon.uz") {
+    if (
+      origin === "http://localhost:3001" ||
+      origin === "https://card.aslamjon.uz" ||
+      origin === "https://dev.aslamjon.uz" ||
+      origin === "https://eada-195-158-9-110.ngrok-free.app"
+    ) {
       const { token, refreshToken } = tokenGenerator(user._id.toString(), get(user, "role"));
       return res.status(200).send({ accessToken: token, refreshToken, tokenType: config.TOKEN_TYPE });
     }

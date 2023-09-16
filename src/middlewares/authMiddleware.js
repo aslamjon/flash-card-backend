@@ -2,11 +2,13 @@ const jwt = require("jsonwebtoken");
 const logger = require("../utils/logger");
 const { get, isEmpty } = require("lodash");
 const { UserModel } = require("../models/userModel");
+const { requestLogger, responseLogger } = require("../utils/utiles");
 const fileName = require("path").basename(__filename);
 
 const cache = {};
 const checkUser = async (req, res, next) => {
   const { authorization } = req.headers;
+  const now = requestLogger("none", fileName, checkUser.name);
   try {
     if (authorization && authorization.startsWith("Bearer")) {
       token = authorization.split(" ")[1];
@@ -46,6 +48,8 @@ const checkUser = async (req, res, next) => {
       logger.error(`${e.message} -> ${fileName} -> ${e} -> ${e.stack}`);
       res.status(401).send({ error: "Auth error" });
     }
+  } finally {
+    responseLogger("none", fileName, checkUser.name, now);
   }
 };
 

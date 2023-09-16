@@ -11,6 +11,8 @@ const {
   saveImgs,
   unlink,
   feildRemover,
+  requestLogger,
+  responseLogger,
 } = require("../utils/utiles");
 
 const fileName = path.basename(__filename);
@@ -24,6 +26,7 @@ const removeFeilds = ["-deleted", "-updated", "-updatedById", "-updatedAt", "-__
 const populateOptions = [{ path: "tag", select: removeFeilds }];
 
 const create = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, create.name);
   try {
     let { name } = req.body;
 
@@ -41,10 +44,13 @@ const create = async (req, res) => {
     });
   } catch (e) {
     errorHandling(e, create.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, create.name, now);
   }
 };
 
 const getData = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, getData.name);
   try {
     let { skip, limit } = req.query;
     const { ids } = req.body;
@@ -70,20 +76,26 @@ const getData = async (req, res) => {
     return res.send({ data: items });
   } catch (e) {
     errorHandling(e, getData.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, getData.name, now);
   }
 };
 
 const getOne = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, getOne.name);
   try {
     const { id } = req.params;
     const item = await getDataByQuery({ query: { _id: id } });
     return res.send({ data: item });
   } catch (e) {
     errorHandling(e, getData.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, getOne.name, now);
   }
 };
 
 const deleteById = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, deleteById.name);
   try {
     const { id } = req.params;
     let query = { _id: id };
@@ -97,10 +109,13 @@ const deleteById = async (req, res) => {
     }
   } catch (e) {
     errorHandling(e, deleteById.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, deleteById.name, now);
   }
 };
 
 const updateById = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, updateById.name);
   try {
     const { id } = req.params;
     let { name } = req.body;
@@ -123,6 +138,8 @@ const updateById = async (req, res) => {
     // return res.status(400).send({ error: "file is required" });
   } catch (e) {
     errorHandling(e, updateById.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, updateById.name, now);
   }
 };
 

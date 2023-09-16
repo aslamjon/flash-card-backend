@@ -1,30 +1,23 @@
 const { Schema, model, Types } = require("mongoose");
 
 const schema = new Schema({
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  firstName: {
-    type: String,
-    default: "",
-  },
-  lastName: {
-    type: String,
-    default: "",
-  },
-  botUserId: {
+  tagId: {
     type: Types.ObjectId,
-    ref: "BotUser",
-  },
-  role: {
-    type: String,
+    ref: "Tags",
     required: true,
-    default: "user",
+  },
+  userId: {
+    type: Types.ObjectId,
+    ref: "Users",
+    required: true,
+  },
+  numberOfAttempts: {
+    type: Number,
+    default: 0,
+  },
+  numberOfAttemptsDate: {
+    type: Number,
+    default: 0,
   },
   createdAt: {
     type: Date,
@@ -55,5 +48,5 @@ const schema = new Schema({
 });
 
 module.exports = {
-  UserModel: model("Users", schema),
+  UserDetailedByTagModel: model("UserDetailedByTag", schema),
 };

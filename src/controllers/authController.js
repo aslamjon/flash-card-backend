@@ -7,9 +7,19 @@ const { SmsCodeModel } = require("../models/smsCodeModel");
 const { BotUserModel } = require("../models/botUserModel");
 const { LanguageModel, LanguageCodeModel, LanguageKeysModel, LanguageValuesModel } = require("../models/languageModel");
 
-const { hideFields, errorHandling, smsCodeGenerator, updateFormat, getOneFromModelByQuery, getDataFromModelByQuery } = require("../utils/utiles");
+const {
+  hideFields,
+  errorHandling,
+  smsCodeGenerator,
+  updateFormat,
+  getOneFromModelByQuery,
+  getDataFromModelByQuery,
+  requestLogger,
+  responseLogger,
+} = require("../utils/utiles");
 const config = require("../config");
 const { bot } = require("../integration/telegram/index");
+const { UserDetailedByTagModel } = require("../models/userDetailedByTagModel");
 
 const fileName = require("path").basename(__filename);
 
@@ -543,40 +553,53 @@ const removeFeilds = ["-deleted", "-updated", "-updatedById", "-updatedAt", "-__
 const populateOptions = [{ path: "botUserId", select: removeFeilds }];
 
 const increaseRating = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, increaseRating.name);
   try {
-    const user = await UserModel.findById(get(req, "user.userId"));
-    if (!user) return res.status(400).send({ error: "user not found" });
+    const { tagId } = req.params;
+
+    if (!tagId) return res.status(400).send({ error: "tagId is required" });
+
+    const one = await getOneByQuery({ query: { tagId, userId: get(req, "user.userId") }, Model: UserDetailedByTagModel });
     const nowInLong = new Date().getTime();
-    // const time =  30 * 1000;
+    if (one) {
+      one.numberOfAttempts++;
+      one.numberOfAttemptsDate = nowInLong;
+      await one.save();
+    } else {
+      const newOne = new UserDetailedByTagModel({
+        tagId,
+        userId: get(req, "user.userId"),
+        numberOfAttempts: 1,
+        numberOfAttemptsDate: nowInLong,
+      });
+      await newOne.save();
+    }
 
-    // if (nowInLong - user.numberOfAttemptsDate < time)
-    //   return res.status(400).send({
-    //     error: `try again after: ${((time - (nowInLong - user.numberOfAttemptsDate)) / 1000 / 60).toFixed(1)} minutes`,
-    //   });
-
-    user.numberOfAttempts++;
-    user.numberOfAttemptsDate = nowInLong;
-
-    await user.save();
     res.send({ message: "ok" });
 
     // const day = 1000 * 60 * 60 * 24;
     // const month = day * 30;
     const users = await UserModel.find().populate(populateOptions);
     users.forEach((u) => {
-      if (u.phoneNumber !== user.phoneNumber) {
-        bot.sendMessage(get(u, "botUserId.chatId"), `${get(user, "firstName")} yangi level ga ko'tarildi. Harakat qilish vaqti kelmadimi?`);
+      if (u._id.toString() !== get(req, "user.userId")) {
+        bot
+          .sendMessage(get(u, "botUserId.chatId"), `${get(req, "user.firstName")} yangi level ga ko'tarildi. Harakat qilish vaqti kelmadimi?`)
+          .catch((e) => {
+            console.log(e.message);
+          });
       }
     });
   } catch (e) {
     errorHandling(e, increaseRating.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, increaseRating.name, now);
   }
 };
 
 const loginWithChatId = async (req, res) => {
+  const { chatId } = req.params;
+  const now = requestLogger(get(req, "user.firstName"), fileName, loginWithChatId.name);
   try {
-    const { chatId } = req.params;
-
     const exist = await getOneByQuery({ query: { chatId }, Model: BotUserModel });
     if (!chatId) return res.status(404).send({ error: "Error" });
 
@@ -596,6 +619,8 @@ const loginWithChatId = async (req, res) => {
     res.send({});
   } catch (e) {
     errorHandling(e, loginWithChatId.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, loginWithChatId.name, now);
   }
 };
 

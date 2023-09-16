@@ -53,7 +53,7 @@ router.get("/v1/language/search", searchValues);
 router.get("/v1/admins", getAdmins);
 router.get("/v1/user-without-admin", getWithoutAdmins);
 
-router.get("/v1/play", checkUser, increaseRating);
+router.get("/v1/play/:tagId", checkUser, increaseRating);
 router.get("/v1/login/:chatId", loginWithChatId);
 
 module.exports = {

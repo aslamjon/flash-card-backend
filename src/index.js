@@ -11,20 +11,15 @@ const { connectDb } = require("./services/db/db");
 
 const { checkUser } = require("./middlewares/authMiddleware");
 
-// ROUTERS
-const { authRouter } = require("./routers/authRouter");
-
 const config = require("./config");
 // const { wareHouseRouter } = require("./routers/wareHouseRouter");
 // const { clientsRouter } = require("./routers/clientRouter");
 
 const { init: startTelegramBot } = require("./integration/telegram/index");
-const { isAdmin } = require("./middlewares/checkPermission");
-const { createDefaultFolder, errorHandlerBot, errorHandling, isFile } = require("./utils/utiles");
+// const { isAdmin } = require("./middlewares/checkPermission");
+// const { createDefaultFolder, errorHandlerBot, errorHandling, isFile } = require("./utils/utiles");
 // const { uploadFile } = require("./controllers/uploadFileController");
-const { flashCardRouter } = require("./routers/flashCardRouter");
-const { tagRouter } = require("./routers/tagRouter");
-const { ratingRouter } = require("./routers/ratingRouter");
+const { flashCardRouter, tagRouter, ratingRouter, userDetailedByTagRouter, authRouter } = require("./routers");
 // const { checkPermission } = require("./middlewares/checkPermission");
 // const { templateRouter } = require("./routers/templateRouter");
 // const { salesRouter } = require("./routers/salesRouter");
@@ -76,6 +71,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/flash-card", flashCardRouter);
 app.use("/api/tag", checkUser, tagRouter);
 app.use("/api/rating", checkUser, ratingRouter);
+app.use("/api/user-detailed", checkUser, userDetailedByTagRouter);
 app.get("/ip", (request, response) => response.send(request.ip));
 // app.use("/api/upload/file", express.static(config.DATA_PATH + "/"));
 

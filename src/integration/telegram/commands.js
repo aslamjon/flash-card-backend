@@ -5,7 +5,8 @@ const { UserModel } = require("../../models/userModel");
 const { FlashCardModel } = require("../../models/flashCardModel");
 const { contactOptions, homeOptions } = require("./keyboards");
 const config = require("../../config");
-const { errorHandlerBot } = require("../../utils/utiles");
+const { errorHandlerBot, requestLogger, responseLogger } = require("../../utils/utiles");
+const { UserDetailedByTagModel } = require("../../models/userDetailedByTagModel");
 
 const fileName = require("path").basename(__filename);
 
@@ -34,19 +35,24 @@ const infoCommand = async (bot, msg) => {
 };
 
 const ratingCommand = async (bot, msg) => {
+  const chatId = msg.chat.id;
+  const now = requestLogger(chatId, fileName, ratingCommand.name);
   try {
-    const chatId = msg.chat.id;
     const botUser = await BotUserModel.findOne({ chatId });
     if (!botUser) return bot.sendMessage(chatId, "data not found");
 
     const user = await UserModel.findOne({ phoneNumber: get(botUser, "phoneNumber") });
 
-    const sortField = "numberOfAttempts";
-    const sortOrder = -1; // -1 for descending, 1 for ascending
+    const userDetailedByTag = await UserDetailedByTagModel.find().populate(["userId"]);
 
-    const users = await UserModel.find()
-      .sort({ [sortField]: sortOrder })
-      .limit(10);
+    const groupOfUserDetailed = {};
+    userDetailedByTag.forEach((item) => {
+      if (!groupOfUserDetailed[item.userId._id]) groupOfUserDetailed[item.userId._id] = { ...get(item.userId, "_doc", {}), numberOfAttempts: 0 };
+      groupOfUserDetailed[item.userId._id].numberOfAttempts += item.numberOfAttempts;
+    });
+    const arrOfUserDetailed = Object.values(groupOfUserDetailed);
+    arrOfUserDetailed.sort((a, b) => b.numberOfAttempts - a.numberOfAttempts);
+    if (arrOfUserDetailed.length > 10) arrOfUserDetailed = arrOfUserDetailed.slice(0, 10);
 
     const flashcardGroupingByCreatedById = await FlashCardModel.aggregate([
       {
@@ -63,15 +69,15 @@ const ratingCommand = async (bot, msg) => {
       resultObject[item._id] = item.count;
     });
 
-    let message = `🎯 Your rating: ${user?.numberOfAttempts}\n\n`;
+    let message = `🎯 Your rating: ${get(groupOfUserDetailed, `${user._id}.numberOfAttempts`)}\n\n`;
 
     let longerName = 0;
-    users.forEach((user, index) => {
+    arrOfUserDetailed.forEach((user, index) => {
       const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${user.numberOfAttempts};`;
       if (nameAndRating.length > longerName) longerName = nameAndRating.length;
     });
 
-    users.forEach((user, index) => {
+    arrOfUserDetailed.forEach((user, index) => {
       const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${
         user.numberOfAttempts
       };`.padEnd(longerName + 2);
@@ -81,6 +87,8 @@ const ratingCommand = async (bot, msg) => {
     bot.sendMessage(chatId, message, homeOptions(chatId));
   } catch (e) {
     errorHandlerBot(e, ratingCommand.name, fileName, msg);
+  } finally {
+    responseLogger(chatId, fileName, ratingCommand.name, now);
   }
 };
 

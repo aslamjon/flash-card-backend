@@ -17,7 +17,8 @@ const checkUser = async (req, res, next) => {
       res.setHeader("Last-Modified", new Date().toUTCString());
 
       const now = new Date().getTime();
-      if (!cache[get(req, "user.userId")] && now - get(cache, `${get(req, "user.userId")}.lastUpdateCacheAt`, 0) > 3600000) {
+      const anhourInMilliseconds = 3600000;
+      if (!cache[get(req, "user.userId")] && now - get(cache, `${get(req, "user.userId")}.lastUpdateCacheAt`, 0) > anhourInMilliseconds) {
         // let requestTime = new Date().getTime();
         const user = await UserModel.findById(get(req, "user.userId"));
         // console.log(`${new Date().getTime() - requestTime}ms`);

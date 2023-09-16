@@ -11,6 +11,8 @@ const {
   saveImgs,
   unlink,
   feildRemover,
+  requestLogger,
+  responseLogger,
 } = require("../utils/utiles");
 const { TagsModel } = require("../models/tagModel");
 const { RatingModel } = require("../models/ratingModel");
@@ -43,6 +45,7 @@ const types = {
 };
 
 const create = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, create.name);
   try {
     let { front, back, frontDescription, backDescription, tagId, type } = req.body;
 
@@ -72,10 +75,13 @@ const create = async (req, res) => {
     });
   } catch (e) {
     errorHandling(e, create.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, create.name, now);
   }
 };
 
 const getData = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, getData.name);
   try {
     let { skip, limit, tagId, type = "global" } = req.query;
     const { ids } = req.body;
@@ -112,10 +118,13 @@ const getData = async (req, res) => {
     return res.send({ data: items, rating });
   } catch (e) {
     errorHandling(e, getData.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, getData.name, now);
   }
 };
 
 const getOne = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, getOne.name);
   try {
     let { tagId } = req.query;
     const { id } = req.params;
@@ -123,10 +132,13 @@ const getOne = async (req, res) => {
     return res.send({ data: item });
   } catch (e) {
     errorHandling(e, getData.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, getOne.name, now);
   }
 };
 
 const deleteById = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, deleteById.name);
   try {
     if (!isArray(req.body)) return res.status(400).send({ error: "invaild data" });
 
@@ -149,10 +161,13 @@ const deleteById = async (req, res) => {
     // }
   } catch (e) {
     errorHandling(e, deleteById.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, deleteById.name, now);
   }
 };
 
 const updateById = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, updateById.name);
   try {
     const { id } = req.params;
     let { front, back, frontDescription, backDescription, type } = req.body;
@@ -183,6 +198,8 @@ const updateById = async (req, res) => {
     // return res.status(400).send({ error: "file is required" });
   } catch (e) {
     errorHandling(e, updateById.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, updateById.name, now);
   }
 };
 
@@ -190,6 +207,7 @@ let cambridge = {};
 let google = {};
 
 const getPronunciation = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, getPronunciation.name);
   try {
     const { word } = req.params;
 
@@ -250,10 +268,13 @@ const getPronunciation = async (req, res) => {
     return res.status(404).send({ error: "not found" });
   } catch (e) {
     errorHandling(e, getPronunciation.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, getPronunciation.name, now);
   }
 };
 
 const getImage = async (req, res) => {
+  const now = requestLogger(get(req, "user.firstName"), fileName, getImage.name);
   try {
     const { word, type } = req.params;
     const filePath = path.join(__dirname, `../../${IMAGES_PATH}/${type}/${word}.jpg`);
@@ -261,6 +282,8 @@ const getImage = async (req, res) => {
     return res.sendFile(filePath);
   } catch (e) {
     errorHandling(e, getImage.name, res, fileName);
+  } finally {
+    responseLogger(get(req, "user.firstName"), fileName, getImage.name, now);
   }
 };
 

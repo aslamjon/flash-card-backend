@@ -162,7 +162,7 @@ const updateById = async (req, res) => {
             }
           : answer === "incorrect"
           ? {
-              rating: get(getUserDetailedByTag, "numberOfAttempts", 0) * ratingInterval,
+              rating: get(getUserDetailedByTag, "numberOfAttempts", 0),
               level: get(getUserDetailedByTag, "numberOfAttempts", 0),
             }
           : {}),

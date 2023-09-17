@@ -158,12 +158,12 @@ const updateById = async (req, res) => {
         ...(answer === "correct"
           ? {
               rating: (get(getUserDetailedByTag, "numberOfAttempts", 0) + 1) * ratingInterval,
-              level: get(getUserDetailedByTag, "numberOfAttempts", 0) + 1,
+              level: Math.floor((get(getUserDetailedByTag, "numberOfAttempts", 0) + 1) / ratingInterval),
             }
           : answer === "incorrect"
           ? {
               rating: get(getUserDetailedByTag, "numberOfAttempts", 0),
-              level: get(getUserDetailedByTag, "numberOfAttempts", 0),
+              level: Math.floor(get(getUserDetailedByTag, "numberOfAttempts", 0) / ratingInterval),
             }
           : {}),
         createdById: get(req, "user.userId"),

@@ -424,7 +424,7 @@ const isFile = (path) => fs.existsSync(path) && fs.lstatSync(path).isFile();
 // })();
 
 const requestLogger = (name, fileName, functionName) => {
-  logger.info(`request: ${name} -> ${fileName} -> ${functionName}`);
+  // logger.info(`request: ${name} -> ${fileName} -> ${functionName}`);
   return Date.now();
 };
 const responseLogger = (name, fileName, functionName, now) => {

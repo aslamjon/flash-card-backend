@@ -139,7 +139,7 @@ const updateById = async (req, res) => {
     let exictFlashCard = await getOneByQuery({ query, Model: FlashCardModel });
     if (isEmpty(exictFlashCard)) return res.status(404).send({ error: "flash-card is not found" });
 
-    let data = await getOneByQuery({ query: { flashCardId } });
+    let data = await getOneByQuery({ query: { flashCardId, userId: get(req, "user.userId") } });
 
     const getUserDetailedByTag = await getOneByQuery({
       query: {
@@ -158,12 +158,12 @@ const updateById = async (req, res) => {
         ...(answer === "correct"
           ? {
               rating: (get(getUserDetailedByTag, "numberOfAttempts", 0) + 1) * ratingInterval,
-              level: Math.floor((get(getUserDetailedByTag, "numberOfAttempts", 0) + 1) / ratingInterval),
+              level: 1,
             }
           : answer === "incorrect"
           ? {
               rating: get(getUserDetailedByTag, "numberOfAttempts", 0),
-              level: Math.floor(get(getUserDetailedByTag, "numberOfAttempts", 0) / ratingInterval),
+              level: 0,
             }
           : {}),
         createdById: get(req, "user.userId"),
@@ -177,7 +177,7 @@ const updateById = async (req, res) => {
       data.rating += data.level * ratingInterval;
     } else if (answer === "incorrect") {
       data.level--;
-      data.rating += data.level * ratingInterval;
+      data.rating -= data.level * ratingInterval;
     }
 
     data = updateFormat({ item: data, id: get(req, "user.userId") });

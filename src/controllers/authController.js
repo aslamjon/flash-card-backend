@@ -556,6 +556,7 @@ const increaseRating = async (req, res) => {
   const now = requestLogger(get(req, "user.firstName"), fileName, increaseRating.name);
   try {
     const { tagId } = req.params;
+    const { count, limit } = req.query;
 
     if (!tagId) return res.status(400).send({ error: "tagId is required" });
 
@@ -583,7 +584,12 @@ const increaseRating = async (req, res) => {
     users.forEach((u) => {
       if (u._id.toString() !== get(req, "user.userId")) {
         bot
-          .sendMessage(get(u, "botUserId.chatId"), `${get(req, "user.firstName")} yangi level ga ko'tarildi. Harakat qilish vaqti kelmadimi?`)
+          .sendMessage(
+            get(u, "botUserId.chatId"),
+            `${get(req, "user.firstName")} yangi level ga ko'tarildi${
+              !isEmpty(count) && !isEmpty(limit) ? " va " + count + "ta so'z o'rgandi" : ""
+            }. Harakat qilish vaqti kelmadimi?`
+          )
           .catch((e) => {
             console.log(e.message);
           });

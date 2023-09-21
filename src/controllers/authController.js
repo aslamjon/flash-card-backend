@@ -588,7 +588,7 @@ const increaseRating = async (req, res) => {
             get(u, "botUserId.chatId"),
             `${get(req, "user.firstName")} yangi level ga ko'tarildi${
               !isEmpty(count) && !isEmpty(limit) ? " va " + count + "ta so'z o'rgandi" : ""
-            }. Harakat qilish vaqti kelmadimi?`
+            }.\n\n Harakat qilish vaqti kelmadimi?`
           )
           .catch((e) => {
             console.log(e.message);

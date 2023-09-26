@@ -13,5 +13,5 @@ pm2
 data/cache
 data/deletedFiles
 package-lock.json
-data/pronunciation
+# data/pronunciation
 data/images

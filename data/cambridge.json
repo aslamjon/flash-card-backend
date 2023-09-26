@@ -18520,11 +18520,6 @@
     "fileName": "you.mp3",
     "filePath": "data/pronunciation/cambridge/you.mp3"
   },
-  "yet": {
-    "downloaded": true,
-    "fileName": "yet.mp3",
-    "filePath": "data/pronunciation/cambridge/yet.mp3"
-  },
   "your": {
     "downloaded": true,
     "fileName": "your.mp3",
@@ -18571,6 +18566,36 @@
     "downloaded": true,
     "fileName": "loyal.mp3",
     "filePath": "data/pronunciation/cambridge/loyal.mp3",
+    "status": 200
+  },
+  "fright": {
+    "downloaded": true,
+    "fileName": "fright.mp3",
+    "filePath": "data/pronunciation/cambridge/fright.mp3",
+    "status": 200
+  },
+  "upset": {
+    "downloaded": true,
+    "fileName": "upset.mp3",
+    "filePath": "data/pronunciation/cambridge/upset.mp3",
+    "status": 200
+  },
+  "bucket": {
+    "downloaded": true,
+    "fileName": "bucket.mp3",
+    "filePath": "data/pronunciation/cambridge/bucket.mp3",
+    "status": 200
+  },
+  "trash": {
+    "downloaded": true,
+    "fileName": "trash.mp3",
+    "filePath": "data/pronunciation/cambridge/trash.mp3",
+    "status": 200
+  },
+  "yet": {
+    "downloaded": true,
+    "fileName": "yet.mp3",
+    "filePath": "data/pronunciation/cambridge/yet.mp3",
     "status": 200
   }
 }

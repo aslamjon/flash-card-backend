@@ -22,5 +22,61 @@
     "fileName": "chemicals.mp3",
     "filePath": "data/pronunciation/google/chemicals.mp3",
     "status": 200
+  },
+  "get disappointed with": {
+    "downloaded": true,
+    "status": 200
+  },
+  "facilities": {
+    "downloaded": true,
+    "fileName": "facilities.mp3",
+    "filePath": "data/pronunciation/google/facilities.mp3",
+    "status": 200
+  },
+  "positive and negative sides": {
+    "downloaded": true,
+    "status": 200
+  },
+  "to be addicted to": {
+    "downloaded": true,
+    "status": 200
+  },
+  "precious time": {
+    "downloaded": true,
+    "status": 200
+  },
+  "health issues": {
+    "downloaded": true,
+    "status": 200
+  },
+  "foreigners": {
+    "downloaded": true,
+    "fileName": "foreigners.mp3",
+    "filePath": "data/pronunciation/google/foreigners.mp3",
+    "status": 200
+  },
+  "raindrops": {
+    "downloaded": true,
+    "fileName": "raindrops.mp3",
+    "filePath": "data/pronunciation/google/raindrops.mp3",
+    "status": 200
+  },
+  "a couple of times": {
+    "downloaded": true,
+    "status": 200
+  },
+  "take your time": {
+    "downloaded": true,
+    "fileName": "take your time.mp3",
+    "filePath": "data/pronunciation/google/take your time.mp3",
+    "status": 200
+  },
+  "commonly used": {
+    "downloaded": true,
+    "status": 200
+  },
+  "educational purposes": {
+    "downloaded": true,
+    "status": 200
   }
 }

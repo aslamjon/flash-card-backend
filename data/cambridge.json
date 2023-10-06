@@ -18597,5 +18597,143 @@
     "fileName": "yet.mp3",
     "filePath": "data/pronunciation/cambridge/yet.mp3",
     "status": 200
+  },
+  "qualified": {
+    "downloaded": true,
+    "fileName": "qualified.mp3",
+    "filePath": "data/pronunciation/cambridge/qualified.mp3",
+    "status": 200
+  },
+  "disappointed": {
+    "downloaded": true,
+    "fileName": "disappointed.mp3",
+    "filePath": "data/pronunciation/cambridge/disappointed.mp3",
+    "status": 200
+  },
+  "nourishing": {
+    "downloaded": true,
+    "fileName": "nourishing.mp3",
+    "filePath": "data/pronunciation/cambridge/nourishing.mp3",
+    "status": 200
+  },
+  "commute": {
+    "downloaded": true,
+    "fileName": "commute.mp3",
+    "filePath": "data/pronunciation/cambridge/commute.mp3",
+    "status": 200
+  },
+  "addicted": {
+    "downloaded": true,
+    "fileName": "addicted.mp3",
+    "filePath": "data/pronunciation/cambridge/addicted.mp3",
+    "status": 200
+  },
+  "precious": {
+    "downloaded": true,
+    "fileName": "precious.mp3",
+    "filePath": "data/pronunciation/cambridge/precious.mp3",
+    "status": 200
+  },
+  "laziness": {
+    "downloaded": true,
+    "fileName": "laziness.mp3",
+    "filePath": "data/pronunciation/cambridge/laziness.mp3",
+    "status": 200
+  },
+  "eyesight": {
+    "downloaded": true,
+    "fileName": "eyesight.mp3",
+    "filePath": "data/pronunciation/cambridge/eyesight.mp3",
+    "status": 200
+  },
+  "obsessively": {
+    "downloaded": true,
+    "fileName": "obsessively.mp3",
+    "filePath": "data/pronunciation/cambridge/obsessively.mp3",
+    "status": 200
+  },
+  "snack": {
+    "downloaded": true,
+    "fileName": "snack.mp3",
+    "filePath": "data/pronunciation/cambridge/snack.mp3",
+    "status": 200
+  },
+  "carefree": {
+    "downloaded": true,
+    "fileName": "carefree.mp3",
+    "filePath": "data/pronunciation/cambridge/carefree.mp3",
+    "status": 200
+  },
+  "urgent": {
+    "downloaded": true,
+    "fileName": "urgent.mp3",
+    "filePath": "data/pronunciation/cambridge/urgent.mp3",
+    "status": 200
+  },
+  "tasty": {
+    "downloaded": true,
+    "fileName": "tasty.mp3",
+    "filePath": "data/pronunciation/cambridge/tasty.mp3",
+    "status": 200
+  },
+  "confess": {
+    "downloaded": true,
+    "fileName": "confess.mp3",
+    "filePath": "data/pronunciation/cambridge/confess.mp3",
+    "status": 200
+  },
+  "socialize": {
+    "downloaded": true,
+    "fileName": "socialize.mp3",
+    "filePath": "data/pronunciation/cambridge/socialize.mp3",
+    "status": 200
+  },
+  "frustrated": {
+    "downloaded": true,
+    "fileName": "frustrated.mp3",
+    "filePath": "data/pronunciation/cambridge/frustrated.mp3",
+    "status": 200
+  },
+  "sightseeing": {
+    "downloaded": true,
+    "fileName": "sightseeing.mp3",
+    "filePath": "data/pronunciation/cambridge/sightseeing.mp3",
+    "status": 200
+  },
+  "buggy": {
+    "downloaded": true,
+    "fileName": "buggy.mp3",
+    "filePath": "data/pronunciation/cambridge/buggy.mp3",
+    "status": 200
+  },
+  "orphanage": {
+    "downloaded": true,
+    "fileName": "orphanage.mp3",
+    "filePath": "data/pronunciation/cambridge/orphanage.mp3",
+    "status": 200
+  },
+  "upstairs": {
+    "downloaded": true,
+    "fileName": "upstairs.mp3",
+    "filePath": "data/pronunciation/cambridge/upstairs.mp3",
+    "status": 200
+  },
+  "orphan": {
+    "downloaded": true,
+    "fileName": "orphan.mp3",
+    "filePath": "data/pronunciation/cambridge/orphan.mp3",
+    "status": 200
+  },
+  "worse": {
+    "downloaded": true,
+    "fileName": "worse.mp3",
+    "filePath": "data/pronunciation/cambridge/worse.mp3",
+    "status": 200
+  },
+  "comprehend": {
+    "downloaded": true,
+    "fileName": "comprehend.mp3",
+    "filePath": "data/pronunciation/cambridge/comprehend.mp3",
+    "status": 200
   }
 }

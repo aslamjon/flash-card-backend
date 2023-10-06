@@ -1,5 +1,6 @@
 const path = require("path");
 const { isEmpty, isArray, get } = require("lodash");
+const fs = require("fs");
 const { FlashCardModel: DBModle } = require("../models/flashCardModel");
 const {
   deleteFormat,
@@ -16,11 +17,9 @@ const {
 } = require("../utils/utiles");
 const { TagsModel } = require("../models/tagModel");
 const { RatingModel } = require("../models/ratingModel");
-const fs = require("fs");
 const { downloadCambridgeAudio } = require("../services/downloadPronunciation/getCambridge");
 const { downloadGoogleAudio } = require("../services/downloadPronunciation/getGoogle");
 
-const words = require("../../data/cambridge.json");
 const logger = require("../utils/logger");
 const { IMAGES_PATH } = require("../config");
 

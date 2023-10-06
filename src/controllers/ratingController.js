@@ -157,7 +157,7 @@ const updateById = async (req, res) => {
         userId: get(req, "user.userId"),
         ...(answer === "correct"
           ? {
-              rating: (get(getUserDetailedByTag, "numberOfAttempts", 0) + 1) * ratingInterval,
+              rating: get(getUserDetailedByTag, "numberOfAttempts", 0) + 1 + ratingInterval,
               level: 1,
             }
           : answer === "incorrect"

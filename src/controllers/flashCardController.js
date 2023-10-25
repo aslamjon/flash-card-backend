@@ -241,7 +241,7 @@ const getPronunciation = async (req, res) => {
     logger.info(`${word} response in ${new Date().getTime() - requestTime}ms <- [getPronunciation.cambridge]: ${JSON.stringify(result)}`);
 
     // if it is success, add word to cache, write to JSON file and send file
-    if (result.status === 200) {
+    if (result.downloaded) {
       cambridge[word] = result;
       fs.writeFileSync("data/cambridge.json", JSON.stringify(cambridge, null, 2));
       const filePath = path.join(__dirname, `../../${get(cambridge[word], "filePath")}`);
@@ -255,7 +255,7 @@ const getPronunciation = async (req, res) => {
     const googleResult = await downloadGoogleAudio(word, "data/pronunciation/google");
     logger.info(`${word} response in ${new Date().getTime() - requestTime}ms <- [getPronunciation.google]: ${JSON.stringify(googleResult)}`);
 
-    if (googleResult.status === 200) {
+    if (googleResult.downloaded) {
       google[word] = googleResult;
 
       fs.writeFileSync("data/google.json", JSON.stringify(google, null, 2));

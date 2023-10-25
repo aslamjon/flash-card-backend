@@ -18735,5 +18735,161 @@
     "fileName": "comprehend.mp3",
     "filePath": "data/pronunciation/cambridge/comprehend.mp3",
     "status": 200
+  },
+  "harm": {
+    "downloaded": true,
+    "fileName": "harm.mp3",
+    "filePath": "data/pronunciation/cambridge/harm.mp3",
+    "status": 200
+  },
+  "prince": {
+    "downloaded": true,
+    "fileName": "prince.mp3",
+    "filePath": "data/pronunciation/cambridge/prince.mp3",
+    "status": 200
+  },
+  "dictionary": {
+    "downloaded": true,
+    "fileName": "dictionary.mp3",
+    "filePath": "data/pronunciation/cambridge/dictionary.mp3",
+    "status": 200
+  },
+  "mend": {
+    "downloaded": true,
+    "fileName": "mend.mp3",
+    "filePath": "data/pronunciation/cambridge/mend.mp3",
+    "status": 200
+  },
+  "malfunctioning": {
+    "downloaded": true,
+    "fileName": "malfunctioning.mp3",
+    "filePath": "data/pronunciation/cambridge/malfunctioning.mp3",
+    "status": 200
+  },
+  "optimistic": {
+    "downloaded": true,
+    "fileName": "optimistic.mp3",
+    "filePath": "data/pronunciation/cambridge/optimistic.mp3",
+    "status": 200
+  },
+  "broad-minded": {
+    "downloaded": true,
+    "fileName": "broad-minded.mp3",
+    "filePath": "data/pronunciation/cambridge/broad-minded.mp3",
+    "status": 200
+  },
+  "minded": {
+    "downloaded": true,
+    "fileName": "minded.mp3",
+    "filePath": "data/pronunciation/cambridge/minded.mp3",
+    "status": 200
+  },
+  "culturally": {
+    "downloaded": true,
+    "fileName": "culturally.mp3",
+    "filePath": "data/pronunciation/cambridge/culturally.mp3",
+    "status": 200
+  },
+  "humorous": {
+    "downloaded": true,
+    "fileName": "humorous.mp3",
+    "filePath": "data/pronunciation/cambridge/humorous.mp3",
+    "status": 200
+  },
+  "tactful": {
+    "downloaded": true,
+    "fileName": "tactful.mp3",
+    "filePath": "data/pronunciation/cambridge/tactful.mp3",
+    "status": 200
+  },
+  "charismatic": {
+    "downloaded": true,
+    "fileName": "charismatic.mp3",
+    "filePath": "data/pronunciation/cambridge/charismatic.mp3",
+    "status": 200
+  },
+  "persuasive": {
+    "downloaded": true,
+    "fileName": "persuasive.mp3",
+    "filePath": "data/pronunciation/cambridge/persuasive.mp3",
+    "status": 200
+  },
+  "visionary": {
+    "downloaded": true,
+    "fileName": "visionary.mp3",
+    "filePath": "data/pronunciation/cambridge/visionary.mp3",
+    "status": 200
+  },
+  "eloquent": {
+    "downloaded": true,
+    "fileName": "eloquent.mp3",
+    "filePath": "data/pronunciation/cambridge/eloquent.mp3",
+    "status": 200
+  },
+  "promoted": {
+    "downloaded": true,
+    "fileName": "promoted.mp3",
+    "filePath": "data/pronunciation/cambridge/promoted.mp3",
+    "status": 200
+  },
+  "fulfillment": {
+    "downloaded": true,
+    "fileName": "fulfillment.mp3",
+    "filePath": "data/pronunciation/cambridge/fulfillment.mp3",
+    "status": 200
+  },
+  "gratitude": {
+    "downloaded": true,
+    "fileName": "gratitude.mp3",
+    "filePath": "data/pronunciation/cambridge/gratitude.mp3",
+    "status": 200
+  },
+  "equality": {
+    "downloaded": true,
+    "fileName": "equality.mp3",
+    "filePath": "data/pronunciation/cambridge/equality.mp3",
+    "status": 200
+  },
+  "presentable": {
+    "downloaded": true,
+    "fileName": "presentable.mp3",
+    "filePath": "data/pronunciation/cambridge/presentable.mp3",
+    "status": 200
+  },
+  "static": {
+    "downloaded": true,
+    "fileName": "static.mp3",
+    "filePath": "data/pronunciation/cambridge/static.mp3",
+    "status": 200
+  },
+  "dynamic": {
+    "downloaded": true,
+    "fileName": "dynamic.mp3",
+    "filePath": "data/pronunciation/cambridge/dynamic.mp3",
+    "status": 200
+  },
+  "long-lasting": {
+    "downloaded": true,
+    "fileName": "long-lasting.mp3",
+    "filePath": "data/pronunciation/cambridge/long-lasting.mp3",
+    "status": 200
+  },
+  "impractical": {
+    "downloaded": true,
+    "fileName": "impractical.mp3",
+    "filePath": "data/pronunciation/cambridge/impractical.mp3",
+    "status": 200
+  },
+  "individuality": {
+    "downloaded": true,
+    "fileName": "individuality.mp3",
+    "filePath": "data/pronunciation/cambridge/individuality.mp3",
+    "status": 200
+  },
+  "lasting": {
+    "downloaded": true,
+    "fileName": "lasting.mp3",
+    "filePath": "data/pronunciation/cambridge/lasting.mp3",
+    "status": 200
   }
 }

@@ -78,5 +78,61 @@
   "educational purposes": {
     "downloaded": true,
     "status": 200
+  },
+  "take out the trash": {
+    "downloaded": true,
+    "status": 200
+  },
+  "figure out": {
+    "downloaded": true,
+    "status": 200
+  },
+  "varies": {
+    "downloaded": true,
+    "fileName": "varies.mp3",
+    "filePath": "data/pronunciation/google/varies.mp3",
+    "status": 200
+  },
+  "culturally curious": {
+    "downloaded": true,
+    "status": 200
+  },
+  "have a great sense of humor": {
+    "downloaded": true,
+    "status": 200
+  },
+  "professional in the field she is working": {
+    "downloaded": true,
+    "status": 200
+  },
+  "get promoted": {
+    "downloaded": true,
+    "status": 200
+  },
+  "show respect towards others": {
+    "downloaded": true,
+    "status": 200
+  },
+  "promote equality": {
+    "downloaded": true,
+    "status": 200
+  },
+  "without a second thought": {
+    "downloaded": true,
+    "status": 200
+  },
+  "occasions": {
+    "downloaded": true,
+    "fileName": "occasions.mp3",
+    "filePath": "data/pronunciation/google/occasions.mp3",
+    "status": 200
+  },
+  "special occasions": {
+    "downloaded": true,
+    "status": 200
+  },
+  "to stay cool": {
+    "downloaded": true,
+    "status": 200
   }
 }

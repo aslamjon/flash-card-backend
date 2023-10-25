@@ -581,19 +581,18 @@ const increaseRating = async (req, res) => {
     // const day = 1000 * 60 * 60 * 24;
     // const month = day * 30;
     const users = await UserModel.find().populate(populateOptions);
+
+    const messageByUser = (isCurrentUser) => {
+      let message = `${get(req, "user.firstName")} yangi level ga `;
+      if (isCurrentUser) message += `ko'tarilganingiz bilan tabriklayman ${!isEmpty(count) ? count + "ta so'z o'rgandingiz" : ""}`;
+      else message += `ko'tarildi${!isEmpty(count) ? " va " + count + "ta so'z o'rgandi" : ""}.\n\n Harakat qilish vaqti kelmadimi?`;
+      return message;
+    };
+
     users.forEach((u) => {
-      if (u._id.toString() !== get(req, "user.userId")) {
-        bot
-          .sendMessage(
-            get(u, "botUserId.chatId"),
-            `${get(req, "user.firstName")} yangi level ga ko'tarildi${
-              !isEmpty(count) && !isEmpty(limit) ? " va " + count + "ta so'z o'rgandi" : ""
-            }.\n\n Harakat qilish vaqti kelmadimi?`
-          )
-          .catch((e) => {
-            console.log(e.message);
-          });
-      }
+      bot.sendMessage(get(u, "botUserId.chatId"), messageByUser(u._id.toString() === get(req, "user.userId"))).catch((e) => {
+        console.log(e.message);
+      });
     });
   } catch (e) {
     errorHandling(e, increaseRating.name, res, fileName);

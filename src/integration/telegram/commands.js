@@ -47,8 +47,10 @@ const ratingCommand = async (bot, msg) => {
 
     const groupOfUserDetailed = {};
     userDetailedByTag.forEach((item) => {
-      if (!groupOfUserDetailed[item.userId._id]) groupOfUserDetailed[item.userId._id] = { ...get(item.userId, "_doc", {}), numberOfAttempts: 0 };
-      groupOfUserDetailed[item.userId._id].numberOfAttempts += item.numberOfAttempts;
+      if (!groupOfUserDetailed[get(item, "userId._id")]) {
+        groupOfUserDetailed[item.userId._id] = { ...get(item.userId, "_doc", {}), numberOfAttempts: 0 };
+      }
+      groupOfUserDetailed[get(item, "userId._id")].numberOfAttempts += item.numberOfAttempts;
     });
     const arrOfUserDetailed = Object.values(groupOfUserDetailed);
     arrOfUserDetailed.sort((a, b) => b.numberOfAttempts - a.numberOfAttempts);
@@ -69,7 +71,7 @@ const ratingCommand = async (bot, msg) => {
       resultObject[item._id] = item.count;
     });
 
-    let message = `🎯 Your rating: ${get(groupOfUserDetailed, `${user._id}.numberOfAttempts`)}\n\n`;
+    let message = `🎯 Your rating: ${get(groupOfUserDetailed, `${get(user, "_id")}.numberOfAttempts`) ?? 0}\n\n`;
 
     let longerName = 0;
     arrOfUserDetailed.forEach((user, index) => {

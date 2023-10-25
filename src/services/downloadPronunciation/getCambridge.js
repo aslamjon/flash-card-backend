@@ -2,6 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const { get } = require("lodash");
 const { download } = require("./downloadFile");
+const { createDefaultFolder } = require("../../utils/utiles");
 
 const baseUrl = "https://dictionary.cambridge.org";
 
@@ -22,6 +23,7 @@ const downloadCambridgeAudio = async (word, folderPath = "pronunciation/cambridg
     const children = Array.from($vocab("#audio2").children());
     const src = get(children, "[1].attribs.src");
 
+    createDefaultFolder(folderPath);
     const filePath = `${folderPath}/${word}.mp3`;
     const r = await download(baseUrl + src, filePath);
     return {
@@ -33,7 +35,7 @@ const downloadCambridgeAudio = async (word, folderPath = "pronunciation/cambridg
   } catch (error) {
     return {
       downloaded: false,
-      status: error.response.status,
+      status: get(error, "response.status"),
     };
   }
 };

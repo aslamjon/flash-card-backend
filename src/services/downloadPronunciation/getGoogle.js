@@ -1,7 +1,9 @@
+const { createDefaultFolder } = require("../../utils/utiles");
 const { download } = require("./downloadFile");
 
 const downloadGoogleAudio = async (word, folderPath = "pronunciation/google") => {
   try {
+    createDefaultFolder(folderPath);
     word = word.toLocaleLowerCase();
     const filePath = `${folderPath}/${word}.mp3`;
 
@@ -13,10 +15,10 @@ const downloadGoogleAudio = async (word, folderPath = "pronunciation/google") =>
       status: 200,
     };
   } catch (error) {
-    console.log("google error:", error);
+    // console.log("google error:", error.response);
     return {
-      downloaded: true,
-      status: 200,
+      downloaded: false,
+      status: 500,
     };
   }
 };

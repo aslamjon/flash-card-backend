@@ -15,6 +15,9 @@ const schema = new Schema({
     type: Number,
     default: 1,
   },
+  repeat: {
+    type: Number,
+  },
   level: {
     type: Number,
     default: 1,

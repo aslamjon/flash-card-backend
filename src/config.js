@@ -1,5 +1,5 @@
 const { get } = require("lodash");
-const path = require("path");
+const { createDefaultFolder } = require("./utils/utiles");
 
 const isProduction = () => {
   const env = process.env.NODE_ENV || "development";
@@ -25,12 +25,15 @@ const config = {
   SECRET: process.env.SALT,
   DELETE_ALL_FILES_PATH: getVarable("DELETE_ALL_FILES_PATH"),
   IMAGES_PATH: getVarable("IMAGES_PATH"),
-  CACHE_PATH: path.join(__dirname, getVarable("CACHE_PATH")),
+  CACHE_PATH: getVarable("CACHE_PATH"),
   DATA_PATH: getVarable("DATA_PATH"),
   TELEGRAM_BOT_API: getVarable("TELEGRAM_BOT_API"),
   TELEGRAM_BOT_USERNAME: getVarable("TELEGRAM_BOT_USERNAME"),
   LIMIT_FOR_UPLOADING_FILE_SIZE_IN_BAYTE: process.env.LIMIT_FOR_UPLOADING_FILE_SIZE_IN_BAYTE || "1048576",
   TOKEN_TYPE: process.env.TOKEN_TYPE,
 };
+createDefaultFolder(config.IMAGES_PATH);
+createDefaultFolder(config.CACHE_PATH);
+createDefaultFolder(config.DATA_PATH);
 
 module.exports = config;

@@ -1,11 +1,11 @@
 const fs = require("fs");
-const { IMAGES_PATH } = require("../../config");
+const { IMAGES_PATH, DATA_PATH } = require("../../config");
 const { download } = require("../downloadPronunciation/downloadFile");
 const { createDefaultFolder } = require("../../utils/utiles");
 
 const name = "essential-english-words-6";
 
-let res = fs.readFileSync(`data/${name}.json`);
+let res = fs.readFileSync(`${DATA_PATH}/${name}.json`);
 res = JSON.parse(res);
 
 const types = {

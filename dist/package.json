@@ -7,9 +7,9 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "vercel-build": "echo hello",
     "dev": "nodemon ./src/index.js",
+    "deploy": "pm2 update && pm2 deploy production exce 'npm install && pm2 startOrRestart ecosystem.config.js --env production'",
+    "start": "node src/index.js",
     "build": "webpack --config webpack.prod.js"
   },
   "repository": {

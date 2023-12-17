@@ -7,7 +7,12 @@ const { createDefaultFolder } = require("../../utils/utiles");
 const baseUrl = "https://dictionary.cambridge.org";
 
 const requestHandler = async (url, cb = () => "") => {
-  const response = await axios.get(url);
+  const response = await axios.get(url, {
+    timeout: 5000,
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+    },
+  });
   const html = response.data;
 
   if (response.status === 200) {
@@ -30,7 +35,6 @@ const downloadCambridgeAudio = async (word, folderPath = "pronunciation/cambridg
       downloaded: true,
       fileName: `${word}.mp3`,
       filePath,
-      status: 200,
     };
   } catch (error) {
     return {

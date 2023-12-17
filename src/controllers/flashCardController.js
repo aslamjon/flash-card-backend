@@ -21,7 +21,7 @@ const { downloadCambridgeAudio } = require("../services/downloadPronunciation/ge
 const { downloadGoogleAudio } = require("../services/downloadPronunciation/getGoogle");
 
 const logger = require("../utils/logger");
-const { IMAGES_PATH } = require("../config");
+const { IMAGES_PATH, DATA_PATH } = require("../config");
 
 const fileName = path.basename(__filename);
 
@@ -212,39 +212,42 @@ const getPronunciation = async (req, res) => {
 
     // if cache is empty, read cambridge and set it to cache
     if (isEmpty(cambridge)) {
-      const res = fs.readFileSync("data/cambridge.json", { encoding: "ascii" });
+      const res = fs.readFileSync(`${DATA_PATH}/cambridge.json`, { encoding: "ascii" });
       cambridge = JSON.parse(res);
     }
 
     // if there is word in cambridge cache, get this
     if (get(cambridge[word], "filePath")) {
-      const filePath = path.join(__dirname, `../../${get(cambridge[word], "filePath")}`);
+      const filePath = path.join(DATA_PATH, get(cambridge[word], "filePath"));
       return res.sendFile(filePath);
     }
 
     // if google cache is empty, read it and set it to google cache
     if (isEmpty(google)) {
-      const r = fs.readFileSync("data/google.json", { encoding: "ascii" });
+      const r = fs.readFileSync(`${DATA_PATH}/google.json`, { encoding: "ascii" });
       google = JSON.parse(r);
     }
 
     // if there is word in google cache, get it
     if (get(google[word], "filePath")) {
-      const filePath = path.join(__dirname, `../../${get(google[word], "filePath")}`);
+      const filePath = path.join(DATA_PATH, get(google[word], "filePath"));
       return res.sendFile(filePath);
     }
 
     // download this pronunciation by cambridge
     logger.info(`${word} request -> [getPronunciation.cambridge] -> ${req.method} ${req.originalUrl}`);
+
     let requestTime = new Date().getTime();
-    const result = await downloadCambridgeAudio(word, "data/pronunciation/cambridge");
+    const result = await downloadCambridgeAudio(word, `${DATA_PATH}/pronunciation/cambridge`);
+
     logger.info(`${word} response in ${new Date().getTime() - requestTime}ms <- [getPronunciation.cambridge]: ${JSON.stringify(result)}`);
 
     // if it is success, add word to cache, write to JSON file and send file
     if (result.downloaded) {
+      delete result.downloaded;
       cambridge[word] = result;
-      fs.writeFileSync("data/cambridge.json", JSON.stringify(cambridge, null, 2));
-      const filePath = path.join(__dirname, `../../${get(cambridge[word], "filePath")}`);
+      fs.writeFileSync(`${DATA_PATH}/cambridge.json`, JSON.stringify(cambridge, null, 2));
+      const filePath = path.join(DATA_PATH, get(cambridge[word], "filePath"));
       return res.sendFile(filePath);
     }
 
@@ -252,15 +255,15 @@ const getPronunciation = async (req, res) => {
     logger.info(`${word} request -> [getPronunciation.google] -> ${req.method} ${req.originalUrl}`);
     requestTime = new Date().getTime();
 
-    const googleResult = await downloadGoogleAudio(word, "data/pronunciation/google");
+    const googleResult = await downloadGoogleAudio(word, `${DATA_PATH}/pronunciation/google`);
     logger.info(`${word} response in ${new Date().getTime() - requestTime}ms <- [getPronunciation.google]: ${JSON.stringify(googleResult)}`);
 
     if (googleResult.downloaded) {
       google[word] = googleResult;
 
-      fs.writeFileSync("data/google.json", JSON.stringify(google, null, 2));
+      fs.writeFileSync(`${DATA_PATH}/google.json`, JSON.stringify(google, null, 2));
 
-      const filePath = path.join(__dirname, `../../${get(google[word], "filePath")}`);
+      const filePath = path.join(DATA_PATH, get(google[word], "filePath"));
       return res.sendFile(filePath);
     }
 
@@ -276,7 +279,7 @@ const getImage = async (req, res) => {
   const now = requestLogger(get(req, "user.firstName"), fileName, getImage.name);
   try {
     const { word, type } = req.params;
-    const filePath = path.join(__dirname, `../../${IMAGES_PATH}/${type}/${word}.jpg`);
+    const filePath = `${IMAGES_PATH}/${type}/${word}.jpg`;
 
     return res.sendFile(filePath);
   } catch (e) {

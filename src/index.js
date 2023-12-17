@@ -20,6 +20,7 @@ const { init: startTelegramBot } = require("./integration/telegram/index");
 // const { createDefaultFolder, errorHandlerBot, errorHandling, isFile } = require("./utils/utiles");
 // const { uploadFile } = require("./controllers/uploadFileController");
 const { flashCardRouter, tagRouter, ratingRouter, userDetailedByTagRouter, authRouter } = require("./routers");
+const { RatingModel } = require("./models/ratingModel");
 // const { checkPermission } = require("./middlewares/checkPermission");
 // const { templateRouter } = require("./routers/templateRouter");
 // const { salesRouter } = require("./routers/salesRouter");
@@ -55,14 +56,6 @@ app.use("/api", limiter);
 
 // COMPRESS MIDDLEWARES
 app.use(compression({ filter: shouldCompress }));
-
-// try {
-//   createDefaultFolder(config.CACHE_PATH);
-//   createDefaultFolder(config.IMAGES_PATH);
-//   createDefaultFolder(config.DELETE_ALL_FILES_PATH);
-// } catch (e) {
-//   errorHandlerBot(e, { name: "index.js" }, "main index.js");
-// }
 
 app.use(express.urlencoded({ limit: "500mb", extended: true }));
 app.use(express.json({ limit: "500mb", extended: true })); // if json come backend then it convert to obj in req.body
@@ -115,4 +108,13 @@ app.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}`);
   await connectDb();
   startTelegramBot();
+  // const data = await RatingModel.find();
+
+  // for (let index = 0; index < data.length; index++) {
+  //   const element = data[index];
+  //   element.repeat = element.level;
+  //   await element.save();
+  //   console.log("ready", index);
+  // }
+  // console.log("done");
 });

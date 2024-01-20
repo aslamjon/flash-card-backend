@@ -1,5 +1,5 @@
 const path = require("path");
-const { isEmpty, isArray, get } = require("lodash");
+const { isEmpty, isArray, get, isNumber } = require("lodash");
 const { RatingModel: DBModle } = require("../models/ratingModel");
 const {
   deleteFormat,
@@ -85,6 +85,7 @@ const updateById = async (req, res) => {
       data.level--;
       data.rating -= data.level * ratingInterval;
     }
+    if (!isNumber(data.repeat)) data.repeat = 0;
     data.repeat++;
 
     data = updateFormat({ item: data, id: get(req, "user.userId") });

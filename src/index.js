@@ -6,12 +6,12 @@ const compression = require("compression");
 require("dotenv").config();
 const logger = require("./utils/logger");
 const rateLimit = require("express-rate-limit");
+const config = require("./config");
 
 const { connectDb } = require("./services/db/db");
 
 const { checkUser } = require("./middlewares/authMiddleware");
 
-const config = require("./config");
 // const { wareHouseRouter } = require("./routers/wareHouseRouter");
 // const { clientsRouter } = require("./routers/clientRouter");
 

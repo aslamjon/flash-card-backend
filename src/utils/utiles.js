@@ -72,7 +72,7 @@ async function saveImg(req, res, file, types = [".png", ".jpeg", ".jpg"]) {
 async function newFileSaver(req, res, file, accept_type = [".png", ".jpeg", ".jpg"]) {
   try {
     if (!isEmpty(file)) {
-      if (file.size <= config.LIMIT_FOR_UPLOADING_FILE_SIZE_IN_BAYTE) {
+      if (file.size <= config.LIMIT_FOR_UPLOADING) {
         const cacheFilePath = file.path;
         let originalName = file.originalname;
 

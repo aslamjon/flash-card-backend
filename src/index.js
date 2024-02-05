@@ -21,6 +21,7 @@ const { init: startTelegramBot } = require("./integration/telegram/index");
 // const { uploadFile } = require("./controllers/uploadFileController");
 const { flashCardRouter, tagRouter, ratingRouter, userDetailedByTagRouter, authRouter } = require("./routers");
 const { RatingModel } = require("./models/ratingModel");
+const { isUndefined } = require("lodash");
 // const { checkPermission } = require("./middlewares/checkPermission");
 // const { templateRouter } = require("./routers/templateRouter");
 // const { salesRouter } = require("./routers/salesRouter");
@@ -108,13 +109,15 @@ app.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}`);
   await connectDb();
   startTelegramBot();
-  // const data = await RatingModel.find();
+  const data = await RatingModel.find();
 
-  // for (let index = 0; index < data.length; index++) {
-  //   const element = data[index];
-  //   element.repeat = element.level;
-  //   await element.save();
-  //   console.log("ready", index);
-  // }
-  // console.log("done");
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    if (isUndefined(element.repeat)) {
+      element.repeat = element.level;
+      await element.save();
+    }
+    console.log("ready", index);
+  }
+  console.log("done");
 });

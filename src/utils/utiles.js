@@ -271,13 +271,13 @@ const getTimes = () => new Date().getTime();
 const deleteFormat = ({ item = {}, id }) => {
   item.deleted = true;
   item.deletedAt = getTimes();
-  item.deletedById = Types.ObjectId(id);
+  item.deletedById = new Types.ObjectId(id);
   return item;
 };
 const updateFormat = ({ item = {}, id }) => {
   item.updated = true;
   item.updatedAt = getTimes();
-  item.updatedById = Types.ObjectId(id);
+  item.updatedById = new Types.ObjectId(id);
   return item;
 };
 

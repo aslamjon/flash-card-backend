@@ -83,7 +83,7 @@ const ratingCommand = async (bot, msg) => {
       const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${
         user.numberOfAttempts
       };`.padEnd(longerName + 2);
-      message += `${nameAndRating} ${get(resultObject, user._id) ? get(resultObject, user._id) + " - ta so'z qo'shgan" : ""}\n`;
+      message += `${nameAndRating} ${get(resultObject, user._id) ? `\n\t${get(resultObject, user._id)} - ta so'z qo'shgan` : "\n"}`;
     });
 
     bot.sendMessage(chatId, message, homeOptions(chatId));

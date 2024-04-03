@@ -73,17 +73,9 @@ const ratingCommand = async (bot, msg) => {
 
     let message = `🎯 Your rating: ${get(groupOfUserDetailed, `${get(user, "_id")}.numberOfAttempts`) ?? 0}\n\n`;
 
-    let longerName = 0;
     arrOfUserDetailed.forEach((user, index) => {
       const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${user.numberOfAttempts};`;
-      if (nameAndRating.length > longerName) longerName = nameAndRating.length;
-    });
-
-    arrOfUserDetailed.forEach((user, index) => {
-      const nameAndRating = `${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖"} ${user.firstName}: ${
-        user.numberOfAttempts
-      };`.padEnd(longerName + 2);
-      message += `${nameAndRating} ${get(resultObject, user._id) ? `\n\t\t\t\t${get(resultObject, user._id)} - ta so'z qo'shgan` : ""}\n`;
+      message += `${nameAndRating} ${get(resultObject, user._id) ? `\n          ${get(resultObject, user._id)} - added words` : ""}\n`;
     });
 
     bot.sendMessage(chatId, message, homeOptions(chatId));

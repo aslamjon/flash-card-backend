@@ -133,7 +133,7 @@ const statisticsCommand = async (bot, msg) => {
     const currentDate = moment();
     const lastMonthMaxDate = currentDate.clone().subtract(1, "month").endOf("month").toDate();
 
-    const lastMonthUsers = await UserModel.find({ $gt: { createdAt: lastMonthMaxDate } });
+    const lastMonthUsers = await UserModel.find({ createdAt: { $gt: lastMonthMaxDate } });
 
     // 🔜 Oxirgi 24 soatda: 7  obunachi qo'shildi
     // 💰Reklama: 👉 t.me/techno_ads/104

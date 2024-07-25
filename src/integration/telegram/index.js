@@ -119,6 +119,8 @@ const init = () => {
   bot.on("webhook_error", errorController);
 };
 
+init();
+
 module.exports = {
   init,
   bot,

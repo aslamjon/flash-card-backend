@@ -31,6 +31,7 @@ const config = {
   TELEGRAM_BOT_USERNAME: getVarable("TELEGRAM_BOT_USERNAME"),
   LIMIT_FOR_UPLOADING: "1048576",
   TOKEN_TYPE: process.env.TOKEN_TYPE,
+  TELEGRAM_BOT_WEBHOOK_PATH: process.env.TELEGRAM_BOT_WEBHOOK_PATH,
 };
 createDefaultFolder(config.IMAGES_PATH);
 createDefaultFolder(config.CACHE_PATH);

@@ -15,7 +15,7 @@ const { checkUser } = require("./middlewares/authMiddleware");
 // const { wareHouseRouter } = require("./routers/wareHouseRouter");
 // const { clientsRouter } = require("./routers/clientRouter");
 
-const { init: startTelegramBot } = require("./integration/telegram/index");
+const { bot } = require("./integration/telegram/index");
 // const { isAdmin } = require("./middlewares/checkPermission");
 // const { createDefaultFolder, errorHandlerBot, errorHandling, isFile } = require("./utils/utiles");
 // const { uploadFile } = require("./controllers/uploadFileController");
@@ -69,6 +69,12 @@ app.get("/ip", (request, response) => response.send(request.ip));
 
 // app.get("/api/upload/file/:id", uploadFile);
 
+// We are receiving updates at the route below!
+app.post("/" + config.TELEGRAM_BOT_WEBHOOK_PATH, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
 app.use("/", express.static(path.join(__dirname, "./public")));
 
 app.use(express.static("routes"));
@@ -106,5 +112,4 @@ const PORT = config.PORT || 3000;
 app.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}`);
   await connectDb();
-  startTelegramBot();
 });

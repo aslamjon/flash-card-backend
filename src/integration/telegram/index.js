@@ -1,22 +1,24 @@
 const TelegramApi = require("node-telegram-bot-api");
-const { TELEGRAM_BOT_API } = require("../../config");
-const { startCommand, infoCommand, ratingCommand, statisticsCommand, showAdsToEveryUsers } = require("./commands");
+const { get } = require("lodash");
+
+const { TELEGRAM_BOT_API, API_ROOT, TELEGRAM_BOT_WEBHOOK_PATH } = require("../../config");
+const { startCommand, ratingCommand, statisticsCommand, showAdsToEveryUsers } = require("./commands");
 const { BotUserModel } = require("../../models/botUserModel");
 
 const fileName = require("path").basename(__filename);
 
-const bot = new TelegramApi(TELEGRAM_BOT_API, { polling: true });
+const bot = new TelegramApi(TELEGRAM_BOT_API);
 
-const { contactOptions, locationOption, homeOptions, removeAllOptions, startOpitons } = require("./keyboards");
+const { homeOptions, removeAllOptions, startOpitons } = require("./keyboards");
 const { errorHandlerBot } = require("../../utils/utiles");
-const { get } = require("lodash");
-
-const chats = {};
 
 const admins = {
   678719517: true,
   134099080: true,
 };
+
+// Set webhook
+bot.setWebHook(`${API_ROOT}/${TELEGRAM_BOT_WEBHOOK_PATH}`);
 
 bot.setMyCommands([
   { command: "/start", description: "Boshlang'ich uchrashuv" },
